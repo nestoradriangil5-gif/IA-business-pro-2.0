@@ -208,7 +208,7 @@ input[type=text]::placeholder,textarea::placeholder{color:var(–text3)}
         <label class="label">¿En qué nicho quieres emprender?</label>
         <input type="text" id="niche-input" placeholder="Ej: finanzas personales para jóvenes latinoamericanos..."/>
       </div>
-      <button class="btn btn-primary" id="btn-ideas">⚡ Generar 4 Ideas de Negocio</button>
+      <button class="btn btn-primary" id="btn-ideas" onclick="genIdeas()">⚡ Generar 4 Ideas de Negocio</button>
     </div>
     <div class="loading" id="s1-load">
       <div class="spinner"></div>
@@ -327,13 +327,7 @@ function callAI(prompt,cb){
   xhr.send(JSON.stringify({prompt:prompt}));
 }
 
-window.addEventListener('DOMContentLoaded',function(){
-
 // STEP 1
-E('btn-ideas').addEventListener('click',genIdeas);
-E('btn-regen-ideas').addEventListener('click',genIdeas);
-E('niche-input').addEventListener('keydown',function(e){if(e.key==='Enter')genIdeas();});
-
 function genIdeas(){
   var niche=E('niche-input').value.trim();
   if(!niche){alert('Escribe tu nicho primero');return;}
@@ -367,7 +361,11 @@ function renderIdeas(){
   });
 }
 
-// STEP 2
+// STEP 2 - attach listeners on DOM ready
+document.addEventListener('DOMContentLoaded',function(){
+E('btn-ideas').addEventListener('click',genIdeas);
+E('btn-regen-ideas').addEventListener('click',genIdeas);
+E('niche-input').addEventListener('keydown',function(e){if(e.key==='Enter')genIdeas();});
 E('btn-to-brand').addEventListener('click',function(){goStep(2);genBrand();});
 E('btn-regen-brand').addEventListener('click',genBrand);
 
