@@ -798,7 +798,7 @@ h1 { font-size: 1.8rem; }
 <script>
 // ─── STATE ───────────────────────────────────────────────────────────────────
 const state = {
-  apiKey: localStorage.getItem('groq_api_key') || '',
+  apiKey: '',
   currentStep: 1,
   niche: '',
   ideas: [],
@@ -811,11 +811,7 @@ const state = {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  if (!state.apiKey) {
-    document.getElementById('configModal').style.display = 'flex';
-  } else {
-    document.getElementById('configModal').style.display = 'none';
-  }
+  document.getElementById('configModal').style.display = 'flex';
 });
 
 function showConfig() {
@@ -827,7 +823,6 @@ function saveApiKey() {
   const key = document.getElementById('apiKeyInput').value.trim();
   if (!key) { alert('Por favor ingresa tu API key'); return; }
   state.apiKey = key;
-  localStorage.setItem('groq_api_key', key);
   document.getElementById('configModal').style.display = 'none';
 }
 
