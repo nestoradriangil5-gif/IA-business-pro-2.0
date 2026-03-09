@@ -569,27 +569,26 @@ h1 { font-size: 1.8rem; }
 
 <!-- CONFIG MODAL -->
 
-<div class="modal-overlay" id="configModal">
-  <div class="modal">
-    <h2>🔑 Configura tu API Key</h2>
-    <p>
-      Esta herramienta usa <strong>Groq</strong> (gratis) para generar tu negocio con IA.<br><br>
-      Obtén tu clave gratis en <a href="https://console.groq.com" target="_blank">console.groq.com</a> → API Keys → Create API Key
+<div id="configModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0f1420;border:1px solid #1e2a42;border-radius:16px;padding:32px;width:100%;max-width:460px;">
+    <h2 style="font-family:'Syne',sans-serif;font-size:1.4rem;margin-bottom:12px;color:#e8edf8;">🔑 Configura tu API Key</h2>
+    <p style="color:#5a6a8a;font-size:0.9rem;margin-bottom:8px;line-height:1.6;">
+      Esta herramienta usa <strong style="color:#e8edf8">Groq</strong> (gratis) para generar tu negocio con IA.
     </p>
-    <div class="input-group">
-      <label>Tu Groq API Key</label>
-      <input type="password" id="apiKeyInput" placeholder="gsk_..." />
-    </div>
-    <p style="font-size:0.78rem; color: var(--muted)">
-      🔒 Tu clave se guarda solo en este navegador y nunca sale a ningún servidor nuestro.
+    <p style="color:#5a6a8a;font-size:0.9rem;margin-bottom:24px;line-height:1.6;">
+      Obtén tu clave gratis en <a href="https://console.groq.com" target="_blank" style="color:#4f7cff">console.groq.com</a> → API Keys → Create API Key
     </p>
-    <div class="modal-actions">
-      <button type="button" onclick="saveApiKey()" style="display:inline-flex;align-items:center;justify-content:center;padding:16px 28px;border-radius:10px;font-family:sans-serif;font-weight:700;font-size:1rem;border:none;cursor:pointer;background:#4f7cff;color:white;width:100%">Guardar y comenzar</button>
-    </div>
+    <label style="display:block;font-size:0.78rem;font-weight:600;color:#5a6a8a;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Tu Groq API Key</label>
+    <input type="password" id="apiKeyInput" placeholder="gsk_..." 
+      style="width:100%;background:#151c2e;border:1px solid #1e2a42;border-radius:10px;padding:14px 16px;color:#e8edf8;font-size:0.95rem;outline:none;margin-bottom:12px;display:block;" />
+    <p style="font-size:0.78rem;color:#5a6a8a;margin-bottom:20px;">🔒 Tu clave se guarda solo en memoria y nunca sale a ningún servidor nuestro.</p>
+    <button id="saveBtn" style="width:100%;padding:16px;border-radius:10px;background:#4f7cff;color:white;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:sans-serif;">
+      Guardar y comenzar →
+    </button>
   </div>
 </div>
 
-<header>
+<header><header>
   <div class="logo">AI <span>Business</span> Builder<span class="logo-dot"></span></div>
   <button class="btn btn-ghost" onclick="showConfig()" style="padding:8px 16px; font-size:0.8rem;">⚙ API Key</button>
 </header>
@@ -812,6 +811,10 @@ const state = {
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('configModal').style.display = 'flex';
+  document.getElementById('saveBtn').addEventListener('click', saveApiKey);
+  document.getElementById('apiKeyInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') saveApiKey();
+  });
 });
 
 function showConfig() {
