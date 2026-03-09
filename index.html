@@ -322,6 +322,8 @@ function callAI(prompt,cb){
   xhr.send(JSON.stringify({prompt:prompt}));
 }
 
+window.addEventListener('DOMContentLoaded',function(){
+
 // STEP 1
 E('btn-ideas').addEventListener('click',genIdeas);
 E('btn-regen-ideas').addEventListener('click',genIdeas);
@@ -458,6 +460,8 @@ E(‘s1-form’).style.display=‘block’;
 E(‘s1-results’).style.display=‘none’;
 E(‘btn-to-brand’).disabled=true;
 goStep(1);
+});
+
 });
 </script>
 
