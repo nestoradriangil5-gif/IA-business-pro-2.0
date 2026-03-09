@@ -165,15 +165,13 @@ h1{font-size:1.7rem}
   <div class="step" id="n4"><div class="step-n">4</div><span class="step-l">Ventas</span></div>
 </div>
 
-<!-- API KEY BAR (always visible) -->
+<!-- API KEY BAR -->
 
 <div class="apibar">
-  <div class="apibar-title">🔑 Groq API Key (gratis en console.groq.com)</div>
-  <div class="apibar-row">
-    <input type="password" id="keyInput" placeholder="gsk_..." autocomplete="off" autocorrect="off" spellcheck="false"/>
-    <button class="btn btn-a" id="keyBtn">Activar</button>
-  </div>
-  <div class="api-ok" id="apiOk">✓ Clave activada — listo para generar</div>
+  <div class="apibar-title">🔑 Groq API Key — pégala y se activa sola (gratis en console.groq.com)</div>
+  <input type="text" id="keyInput" placeholder="Pega tu clave aquí: gsk_..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="width:100%;margin-bottom:10px"/>
+  <div id="apiOk" style="display:none;color:var(--accent);font-size:.85rem;">✓ Clave detectada — ahora genera tu negocio</div>
+  <div id="apiNo" style="color:var(--muted);font-size:.82rem;">Pega tu clave de Groq arriba para comenzar</div>
 </div>
 
 <!-- STEP 1 -->
@@ -258,23 +256,30 @@ var S = {
   product:null, sales:null
 };
 
-// INIT — wire up buttons
+// INIT
 (function(){
-var kb = document.getElementById(‘keyBtn’);
 var ki = document.getElementById(‘keyInput’);
 
-kb.onclick = function(){
+function checkKey(){
 var v = ki.value.trim();
-if(!v){alert(‘Pega tu Groq API Key primero’);return;}
+if(v.length > 10){
 S.key = v;
-document.getElementById(‘apiOk’).style.display = ‘flex’;
+document.getElementById(‘apiOk’).style.display = ‘block’;
+document.getElementById(‘apiNo’).style.display = ‘none’;
 document.getElementById(‘api-status’).textContent = ‘✓ Clave activa’;
 document.getElementById(‘api-status’).style.color = ‘var(–accent)’;
-kb.textContent = ‘✓ OK’;
-kb.style.background = ‘var(–accent)’;
-};
+} else {
+S.key = ‘’;
+document.getElementById(‘apiOk’).style.display = ‘none’;
+document.getElementById(‘apiNo’).style.display = ‘block’;
+document.getElementById(‘api-status’).textContent = ‘Sin clave’;
+document.getElementById(‘api-status’).style.color = ‘’;
+}
+}
 
-ki.onkeydown = function(e){ if(e.key===‘Enter’) kb.onclick(); };
+ki.oninput = checkKey;
+ki.onchange = checkKey;
+ki.onpaste = function(){ setTimeout(checkKey, 100); };
 
 document.getElementById(‘btnIdeas’).onclick = genIdeas;
 document.getElementById(‘btnS2’).onclick = function(){ goStep(2); genBrand(); };
@@ -341,7 +346,6 @@ function genIdeas(){
 var niche=document.getElementById(‘nicheIn’).value.trim();
 if(!niche){alert(‘Escribe tu nicho primero’);return;}
 if(!S.key){alert(‘Primero activa tu Groq API Key arriba ↑’);return;}
-alert(‘✓ Clave: ‘+S.key.substring(0,10)+’… Nicho: ‘+niche+’ — Llamando a Groq…’);
 S.niche=niche; S.idea=null;
 document.getElementById(‘s1form’).style.display=‘none’;
 document.getElementById(‘s1load’).style.display=‘flex’;
