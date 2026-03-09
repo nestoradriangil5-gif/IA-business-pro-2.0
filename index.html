@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Business Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b12;
+    --surface: #0f1420;
+    --surface2: #151c2e;
+    --border: #1e2a42;
+    --primary: #4f7cff;
+    --primary-glow: rgba(79,124,255,0.15);
+    --accent: #00e5a0;
+    --accent-glow: rgba(0,229,160,0.12);
+    --text: #e8edf8;
+    --muted: #5a6a8a;
+    --danger: #ff4f6a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–bg);
+color: var(–text);
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* BACKGROUND */
+body::before {
+content: ‘’;
+position: fixed;
+top: -40%;
+left: -20%;
+width: 70%;
+height: 70%;
+background: radial-gradient(ellipse, rgba(79,124,255,0.07) 0%, transparent 70%);
+pointer-events: none;
+z-index: 0;
+}
+body::after {
+content: ‘’;
+position: fixed;
+bottom: -30%;
+right: -10%;
+width: 60%;
+height: 60%;
+background: radial-gradient(ellipse, rgba(0,229,160,0.05) 0%, transparent 70%);
+pointer-events: none;
+z-index: 0;
+}
+
+/* HEADER */
+header {
+position: relative;
+z-index: 10;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 20px 40px;
+border-bottom: 1px solid var(–border);
+backdrop-filter: blur(20px);
+background: rgba(8,11,18,0.8);
+position: sticky;
+top: 0;
+}
+.logo {
+font-family: ‘Syne’, sans-serif;
+font-weight: 800;
+font-size: 1.2rem;
+letter-spacing: -0.02em;
+}
+.logo span { color: var(–primary); }
+.logo-dot {
+display: inline-block;
+width: 8px; height: 8px;
+background: var(–accent);
+border-radius: 50%;
+margin-left: 4px;
+vertical-align: middle;
+animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+0%, 100% { opacity: 1; transform: scale(1); }
+50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* MAIN LAYOUT */
+main {
+position: relative;
+z-index: 1;
+max-width: 860px;
+margin: 0 auto;
+padding: 48px 24px 80px;
+}
+
+/* STEPS INDICATOR */
+.steps-nav {
+display: flex;
+align-items: center;
+gap: 0;
+margin-bottom: 48px;
+}
+.step-item {
+display: flex;
+align-items: center;
+gap: 10px;
+flex: 1;
+cursor: pointer;
+opacity: 0.4;
+transition: opacity 0.3s;
+}
+.step-item.active { opacity: 1; }
+.step-item.done { opacity: 0.7; }
+.step-num {
+width: 32px; height: 32px;
+border-radius: 50%;
+border: 2px solid var(–border);
+display: flex;align-items:center;justify-content:center;
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 0.75rem;
+flex-shrink: 0;
+transition: all 0.3s;
+}
+.step-item.active .step-num {
+border-color: var(–primary);
+background: var(–primary-glow);
+color: var(–primary);
+}
+.step-item.done .step-num {
+border-color: var(–accent);
+background: var(–accent-glow);
+color: var(–accent);
+}
+.step-label {
+font-size: 0.78rem;
+font-weight: 500;
+white-space: nowrap;
+}
+.step-connector {
+flex: 1;
+height: 1px;
+background: var(–border);
+margin: 0 8px;
+max-width: 40px;
+}
+
+/* PANELS */
+.panel {
+display: none;
+animation: fadeUp 0.4s ease;
+}
+.panel.active { display: block; }
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(16px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* TYPOGRAPHY */
+h1 {
+font-family: ‘Syne’, sans-serif;
+font-weight: 800;
+font-size: clamp(2rem, 5vw, 3.2rem);
+line-height: 1.1;
+letter-spacing: -0.03em;
+margin-bottom: 12px;
+}
+h1 .highlight {
+background: linear-gradient(135deg, var(–primary), var(–accent));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.subtitle {
+color: var(–muted);
+font-size: 1.05rem;
+font-weight: 300;
+margin-bottom: 36px;
+line-height: 1.6;
+}
+h2 {
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 1.5rem;
+letter-spacing: -0.02em;
+margin-bottom: 8px;
+}
+
+/* FORM ELEMENTS */
+.input-group { margin-bottom: 20px; }
+label {
+display: block;
+font-size: 0.82rem;
+font-weight: 500;
+color: var(–muted);
+margin-bottom: 8px;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+}
+input, textarea, select {
+width: 100%;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 14px 16px;
+color: var(–text);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.95rem;
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus {
+border-color: var(–primary);
+box-shadow: 0 0 0 3px var(–primary-glow);
+}
+textarea { min-height: 100px; resize: vertical; }
+
+/* BUTTONS */
+.btn {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 14px 28px;
+border-radius: 10px;
+font-family: ‘Syne’, sans-serif;
+font-weight: 600;
+font-size: 0.9rem;
+letter-spacing: 0.01em;
+border: none;
+cursor: pointer;
+transition: all 0.2s;
+}
+.btn-primary {
+background: var(–primary);
+color: white;
+}
+.btn-primary:hover:not(:disabled) {
+background: #6b8fff;
+transform: translateY(-1px);
+box-shadow: 0 8px 24px rgba(79,124,255,0.3);
+}
+.btn-primary:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+}
+.btn-ghost {
+background: transparent;
+color: var(–muted);
+border: 1px solid var(–border);
+}
+.btn-ghost:hover { color: var(–text); border-color: var(–text); }
+.btn-accent {
+background: var(–accent);
+color: #080b12;
+}
+.btn-accent:hover:not(:disabled) {
+background: #00ffb3;
+transform: translateY(-1px);
+box-shadow: 0 8px 24px rgba(0,229,160,0.3);
+}
+
+/* CARDS */
+.card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 14px;
+padding: 24px;
+margin-bottom: 16px;
+transition: border-color 0.2s, transform 0.2s;
+cursor: pointer;
+}
+.card:hover { border-color: var(–primary); transform: translateY(-2px); }
+.card.selected {
+border-color: var(–primary);
+background: var(–primary-glow);
+box-shadow: 0 0 0 1px var(–primary);
+}
+.card-title {
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 1.05rem;
+margin-bottom: 8px;
+}
+.card-desc { color: var(–muted); font-size: 0.9rem; line-height: 1.6; }
+.card-meta {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-top: 14px;
+}
+.tag {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 6px;
+padding: 4px 10px;
+font-size: 0.75rem;
+color: var(–muted);
+}
+.tag.accent { border-color: var(–accent); color: var(–accent); background: var(–accent-glow); }
+.tag.primary { border-color: var(–primary); color: var(–primary); background: var(–primary-glow); }
+
+/* LOADING */
+.loading {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 16px;
+padding: 60px 20px;
+text-align: center;
+}
+.spinner {
+width: 44px; height: 44px;
+border: 3px solid var(–border);
+border-top-color: var(–primary);
+border-radius: 50%;
+animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text {
+color: var(–muted);
+font-size: 0.95rem;
+}
+.loading-text span {
+display: block;
+font-family: ‘Syne’, sans-serif;
+font-size: 1.1rem;
+color: var(–text);
+margin-bottom: 4px;
+}
+
+/* RESULTS */
+.result-section {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 14px;
+overflow: hidden;
+margin-bottom: 20px;
+}
+.result-header {
+padding: 16px 24px;
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.result-header-icon {
+width: 28px; height: 28px;
+border-radius: 8px;
+background: var(–primary-glow);
+border: 1px solid var(–primary);
+display: flex; align-items:center; justify-content:center;
+font-size: 0.75rem;
+}
+.result-header h3 {
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 0.9rem;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: var(–muted);
+}
+.result-body { padding: 24px; }
+.result-item {
+padding: 14px 0;
+border-bottom: 1px solid var(–border);
+display: flex;
+gap: 14px;
+align-items: flex-start;
+}
+.result-item:last-child { border-bottom: none; padding-bottom: 0; }
+.result-num {
+font-family: ‘Syne’, sans-serif;
+font-weight: 800;
+font-size: 0.75rem;
+color: var(–primary);
+min-width: 24px;
+margin-top: 2px;
+}
+.result-content strong {
+display: block;
+font-weight: 600;
+margin-bottom: 4px;
+font-size: 0.95rem;
+}
+.result-content p { color: var(–muted); font-size: 0.88rem; line-height: 1.6; }
+
+/* BRAND GRID */
+.brand-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+gap: 10px;
+margin-bottom: 16px;
+}
+.brand-item {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 14px;
+cursor: pointer;
+transition: all 0.2s;
+text-align: center;
+}
+.brand-item:hover { border-color: var(–primary); }
+.brand-item.selected { border-color: var(–accent); background: var(–accent-glow); }
+.brand-name { font-family: ‘Syne’, sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+.brand-rationale { font-size: 0.75rem; color: var(–muted); }
+
+/* SALES PAGE PREVIEW */
+.sales-preview {
+background: white;
+color: #111;
+border-radius: 14px;
+overflow: hidden;
+margin-bottom: 20px;
+}
+.sp-hero {
+background: linear-gradient(135deg, #1a0a2e, #0a1628);
+color: white;
+padding: 60px 40px;
+text-align: center;
+}
+.sp-hero h2 { font-size: 2rem; margin-bottom: 12px; color: white; }
+.sp-hero p { opacity: 0.8; font-size: 1.05rem; }
+.sp-section { padding: 40px; border-bottom: 1px solid #eee; }
+.sp-section h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: #111; }
+.sp-benefits { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.sp-benefit { background: #f8f9ff; border-radius: 10px; padding: 16px; }
+.sp-benefit strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+.sp-benefit p { font-size: 0.82rem; color: #666; }
+.sp-cta { background: #1a0a2e; color: white; text-align: center; padding: 48px 40px; }
+.sp-cta h2 { color: white; margin-bottom: 8px; }
+.sp-price { font-size: 3rem; font-weight: 800; color: #4f7cff; margin: 16px 0; }
+.sp-btn { background: #4f7cff; color: white; border: none; padding: 16px 40px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+
+/* CONFIG MODAL */
+.modal-overlay {
+position: fixed; inset: 0;
+background: rgba(0,0,0,0.8);
+backdrop-filter: blur(8px);
+z-index: 100;
+display: flex; align-items: center; justify-content: center;
+padding: 20px;
+}
+.modal {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 16px;
+padding: 32px;
+width: 100%;
+max-width: 480px;
+animation: fadeUp 0.3s ease;
+}
+.modal h2 { font-size: 1.4rem; margin-bottom: 8px; }
+.modal p { color: var(–muted); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+.modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+
+/* ACTIONS BAR */
+.actions-bar {
+display: flex;
+gap: 12px;
+margin-top: 32px;
+flex-wrap: wrap;
+}
+
+/* ALERT */
+.alert {
+background: rgba(255,79,106,0.1);
+border: 1px solid rgba(255,79,106,0.3);
+border-radius: 10px;
+padding: 14px 18px;
+font-size: 0.88rem;
+color: #ff8fa0;
+margin-bottom: 20px;
+}
+
+/* HERO LANDING */
+.hero {
+text-align: center;
+padding: 20px 0 48px;
+}
+.hero-badge {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+background: var(–accent-glow);
+border: 1px solid var(–accent);
+border-radius: 100px;
+padding: 6px 16px;
+font-size: 0.78rem;
+color: var(–accent);
+font-weight: 500;
+margin-bottom: 24px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+}
+
+/* API KEY NOTICE */
+.api-notice {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 16px 20px;
+font-size: 0.85rem;
+color: var(–muted);
+margin-bottom: 32px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.api-notice .key-icon { font-size: 1.2rem; }
+.api-notice a { color: var(–primary); text-decoration: none; }
+.api-notice a:hover { text-decoration: underline; }
+
+/* PROGRESS BAR */
+.progress {
+height: 2px;
+background: var(–border);
+border-radius: 2px;
+margin-bottom: 48px;
+overflow: hidden;
+}
+.progress-bar {
+height: 100%;
+background: linear-gradient(90deg, var(–primary), var(–accent));
+border-radius: 2px;
+transition: width 0.5s ease;
+}
+
+/* CHAPTER LIST */
+.chapter-list { list-style: none; }
+.chapter-item {
+display: flex;
+gap: 16px;
+padding: 16px 0;
+border-bottom: 1px solid var(–border);
+}
+.chapter-item:last-child { border-bottom: none; }
+.ch-num {
+font-family: ‘Syne’, sans-serif;
+font-weight: 800;
+font-size: 1.5rem;
+color: var(–border);
+min-width: 40px;
+line-height: 1;
+}
+.ch-title { font-weight: 600; margin-bottom: 4px; }
+.ch-desc { font-size: 0.88rem; color: var(–muted); line-height: 1.6; }
+
+@media (max-width: 600px) {
+header { padding: 16px 20px; }
+main { padding: 32px 16px 60px; }
+.steps-nav { gap: 0; }
+.step-label { display: none; }
+h1 { font-size: 1.8rem; }
+.sp-hero { padding: 40px 20px; }
+.sp-section { padding: 24px 20px; }
+.sp-cta { padding: 32px 20px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- CONFIG MODAL -->
+
+<div class="modal-overlay" id="configModal">
+  <div class="modal">
+    <h2>🔑 Configura tu API Key</h2>
+    <p>
+      Esta herramienta usa <strong>Groq</strong> (gratis) para generar tu negocio con IA.<br><br>
+      Obtén tu clave gratis en <a href="https://console.groq.com" target="_blank">console.groq.com</a> → API Keys → Create API Key
+    </p>
+    <div class="input-group">
+      <label>Tu Groq API Key</label>
+      <input type="password" id="apiKeyInput" placeholder="gsk_..." />
+    </div>
+    <p style="font-size:0.78rem; color: var(--muted)">
+      🔒 Tu clave se guarda solo en este navegador y nunca sale a ningún servidor nuestro.
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveApiKey()">Guardar y comenzar →</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="logo">AI <span>Business</span> Builder<span class="logo-dot"></span></div>
+  <button class="btn btn-ghost" onclick="showConfig()" style="padding:8px 16px; font-size:0.8rem;">⚙ API Key</button>
+</header>
+
+<main>
+  <!-- PROGRESS -->
+  <div class="progress">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+
+  <!-- STEPS NAV -->
+
+  <div class="steps-nav">
+    <div class="step-item active" id="nav-1" onclick="goToStep(1)">
+      <div class="step-num">1</div>
+      <span class="step-label">Ideas</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item" id="nav-2" onclick="goToStep(2)">
+      <div class="step-num">2</div>
+      <span class="step-label">Marca</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item" id="nav-3" onclick="goToStep(3)">
+      <div class="step-num">3</div>
+      <span class="step-label">Producto</span>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item" id="nav-4" onclick="goToStep(4)">
+      <div class="step-num">4</div>
+      <span class="step-label">Ventas</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: IDEAS -->
+
+  <div class="panel active" id="panel-1">
+    <div class="hero">
+      <div class="hero-badge">✦ powered by groq ai</div>
+      <h1>Tu negocio digital<br><span class="highlight">empieza aquí</span></h1>
+      <p class="subtitle">Describe tu nicho y la IA generará 4 ideas de negocio<br>con modelo de monetización, audiencia y más.</p>
+    </div>
+
+```
+<div id="step1-form">
+  <div class="input-group">
+    <label>¿En qué nicho quieres emprender?</label>
+    <input type="text" id="nicheInput" placeholder="Ej: fitness para mujeres mayores de 40, finanzas personales para millennials..." />
+  </div>
+  <button class="btn btn-primary" onclick="generateIdeas()" id="btn-ideas">
+    <span>⚡</span> Generar 4 Ideas de Negocio
+  </button>
+</div>
+
+<div id="step1-loading" style="display:none">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">
+      <span>Analizando tu nicho</span>
+      La IA está creando ideas únicas y validadas para ti...
+    </div>
+  </div>
+</div>
+
+<div id="step1-results" style="display:none">
+  <div id="ideas-list"></div>
+  <div class="actions-bar">
+    <button class="btn btn-primary" onclick="proceedToStep2()" id="btn-step2" disabled>
+      Continuar con esta idea →
+    </button>
+    <button class="btn btn-ghost" onclick="generateIdeas()">↺ Regenerar</button>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- STEP 2: BRAND -->
+
+  <div class="panel" id="panel-2">
+    <h2>Crea tu <span style="color:var(--primary)">Marca</span></h2>
+    <p class="subtitle" style="margin-bottom:32px">Nombres, taglines y dominos para tu negocio.</p>
+
+```
+<div id="step2-loading" style="display:none">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">
+      <span>Construyendo tu marca</span>
+      Creando nombres únicos, taglines y dominios...
+    </div>
+  </div>
+</div>
+
+<div id="step2-results" style="display:none">
+  <div class="result-section">
+    <div class="result-header">
+      <div class="result-header-icon">N</div>
+      <h3>Nombres de Marca</h3>
+    </div>
+    <div class="result-body">
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px">Toca uno para seleccionarlo</p>
+      <div class="brand-grid" id="brand-names"></div>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-header">
+      <div class="result-header-icon">T</div>
+      <h3>Taglines</h3>
+    </div>
+    <div class="result-body" id="taglines"></div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-header">
+      <div class="result-header-icon">🌐</div>
+      <h3>Dominios Sugeridos</h3>
+    </div>
+    <div class="result-body" id="domains"></div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn btn-primary" onclick="proceedToStep3()" id="btn-step3" disabled>
+      Crear estructura del producto →
+    </button>
+    <button class="btn btn-ghost" onclick="generateBrand()">↺ Regenerar marca</button>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- STEP 3: PRODUCT -->
+
+  <div class="panel" id="panel-3">
+    <h2>Estructura tu <span style="color:var(--accent)">Producto</span></h2>
+    <p class="subtitle" style="margin-bottom:32px">Índice completo, capítulos, bonos y propuesta de transformación.</p>
+
+```
+<div id="step3-loading" style="display:none">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">
+      <span>Diseñando tu producto</span>
+      Estructurando capítulos, ejercicios y bonos...
+    </div>
+  </div>
+</div>
+
+<div id="step3-results" style="display:none">
+  <div class="result-section" id="product-overview"></div>
+  <div class="result-section">
+    <div class="result-header">
+      <div class="result-header-icon">📚</div>
+      <h3>Capítulos</h3>
+    </div>
+    <div class="result-body">
+      <ul class="chapter-list" id="chapters-list"></ul>
+    </div>
+  </div>
+  <div class="result-section" id="bonuses-section"></div>
+
+  <div class="actions-bar">
+    <button class="btn btn-accent" onclick="proceedToStep4()">
+      ✦ Crear Página de Ventas →
+    </button>
+    <button class="btn btn-ghost" onclick="generateProduct()">↺ Regenerar</button>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- STEP 4: SALES PAGE -->
+
+  <div class="panel" id="panel-4">
+    <h2>Tu <span style="color:var(--accent)">Página de Ventas</span></h2>
+    <p class="subtitle" style="margin-bottom:32px">Lista para publicar. Cópiala, descárgala y véndela.</p>
+
+```
+<div id="step4-loading" style="display:none">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">
+      <span>Escribiendo tu copy de ventas</span>
+      Titulares, beneficios, testimonios, garantía y CTA...
+    </div>
+  </div>
+</div>
+
+<div id="step4-results" style="display:none">
+  <div class="actions-bar" style="margin-top:0; margin-bottom:24px">
+    <button class="btn btn-accent" onclick="downloadSalesPage()">⬇ Descargar HTML</button>
+    <button class="btn btn-ghost" onclick="generateSalesPage()">↺ Regenerar</button>
+    <button class="btn btn-ghost" onclick="startOver()">✦ Nuevo negocio</button>
+  </div>
+  <div id="sales-preview"></div>
+</div>
+```
+
+  </div>
+
+</main>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────────────
+const state = {
+  apiKey: localStorage.getItem('groq_api_key') || '',
+  currentStep: 1,
+  niche: '',
+  ideas: [],
+  selectedIdea: null,
+  brand: null,
+  selectedBrandName: '',
+  product: null,
+  salesPage: null,
+};
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  if (!state.apiKey) {
+    document.getElementById('configModal').style.display = 'flex';
+  } else {
+    document.getElementById('configModal').style.display = 'none';
+  }
+});
+
+function showConfig() {
+  document.getElementById('apiKeyInput').value = state.apiKey;
+  document.getElementById('configModal').style.display = 'flex';
+}
+
+function saveApiKey() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (!key) { alert('Por favor ingresa tu API key'); return; }
+  state.apiKey = key;
+  localStorage.setItem('groq_api_key', key);
+  document.getElementById('configModal').style.display = 'none';
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function goToStep(n) {
+  if (n > state.currentStep) return;
+  setStep(n);
+}
+
+function setStep(n) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + n).classList.add('active');
+
+  document.querySelectorAll('.step-item').forEach((el, i) => {
+    el.classList.remove('active', 'done');
+    if (i + 1 === n) el.classList.add('active');
+    else if (i + 1 < n) el.classList.add('done');
+  });
+
+  state.currentStep = n;
+  document.getElementById('progressBar').style.width = ((n - 1) / 3 * 100) + '%';
+  window.scrollTo(0, 0);
+}
+
+// ─── GROQ API ────────────────────────────────────────────────────────────────
+async function callGroq(prompt, maxTokens = 2000) {
+  if (!state.apiKey) { showConfig(); throw new Error('No API key'); }
+
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + state.apiKey,
+    },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      max_tokens: maxTokens,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error?.message || 'Error de API');
+  }
+  const data = await res.json();
+  return data.choices[0].message.content;
+}
+
+function parseJSON(text) {
+  return JSON.parse(text.replace(/^```json\s*/m, '').replace(/^```\s*/m, '').replace(/```\s*$/m, '').trim());
+}
+
+function showError(msg) {
+  const el = document.createElement('div');
+  el.className = 'alert';
+  el.textContent = '⚠ ' + msg;
+  document.querySelector('.panel.active').prepend(el);
+  setTimeout(() => el.remove(), 6000);
+}
+
+// ─── STEP 1: IDEAS ────────────────────────────────────────────────────────────
+async function generateIdeas() {
+  const niche = document.getElementById('nicheInput').value.trim();
+  if (!niche) { alert('Por favor describe tu nicho'); return; }
+  state.niche = niche;
+  state.selectedIdea = null;
+
+  document.getElementById('step1-form').style.display = 'none';
+  document.getElementById('step1-loading').style.display = 'block';
+  document.getElementById('step1-results').style.display = 'none';
+
+  try {
+    const text = await callGroq(`
+Eres un experto en negocios digitales. Genera exactamente 4 ideas de negocio digital para el nicho: "${niche}".
+
+Responde SOLO con JSON válido, sin texto adicional:
+{
+  "ideas": [
+    {
+      "name": "Nombre del negocio",
+      "description": "Descripción clara de qué es y qué hace (2-3 oraciones)",
+      "targetAudience": "Audiencia objetivo específica",
+      "monetizationModel": "Cómo genera dinero",
+      "productFormat": "Curso online / SaaS / Ebook / Membresía / etc",
+      "uniqueSellingProposition": "Qué lo hace único vs competencia",
+      "priceRange": "Rango de precio sugerido"
+    }
+  ]
+}`, 2000);
+
+    const data = parseJSON(text);
+    state.ideas = data.ideas;
+    renderIdeas();
+  } catch (e) {
+    showError(e.message);
+    document.getElementById('step1-form').style.display = 'block';
+  } finally {
+    document.getElementById('step1-loading').style.display = 'none';
+  }
+}
+
+function renderIdeas() {
+  const list = document.getElementById('ideas-list');
+  list.innerHTML = state.ideas.map((idea, i) => `
+    <div class="card" id="idea-${i}" onclick="selectIdea(${i})">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div class="card-title">${idea.name}</div>
+        <span class="tag primary">${idea.productFormat}</span>
+      </div>
+      <div class="card-desc" style="margin-top:8px">${idea.description}</div>
+      <div class="card-meta">
+        <span class="tag">👥 ${idea.targetAudience}</span>
+        <span class="tag accent">${idea.priceRange}</span>
+        <span class="tag">💡 ${idea.monetizationModel}</span>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('step1-loading').style.display = 'none';
+  document.getElementById('step1-results').style.display = 'block';
+  document.getElementById('step1-form').style.display = 'block';
+}
+
+function selectIdea(i) {
+  state.selectedIdea = state.ideas[i];
+  document.querySelectorAll('#ideas-list .card').forEach((c, j) => {
+    c.classList.toggle('selected', j === i);
+  });
+  document.getElementById('btn-step2').disabled = false;
+}
+
+function proceedToStep2() {
+  if (!state.selectedIdea) return;
+  setStep(2);
+  generateBrand();
+}
+
+// ─── STEP 2: BRAND ────────────────────────────────────────────────────────────
+async function generateBrand() {
+  document.getElementById('step2-loading').style.display = 'block';
+  document.getElementById('step2-results').style.display = 'none';
+
+  try {
+    const text = await callGroq(`
+Eres un experto en branding. Crea un kit de marca completo para este negocio:
+
+Negocio: ${state.selectedIdea.name}
+Descripción: ${state.selectedIdea.description}
+Audiencia: ${state.selectedIdea.targetAudience}
+Formato: ${state.selectedIdea.productFormat}
+
+Responde SOLO con JSON válido:
+{
+  "brandNames": [
+    {"name": "NombreMarca", "rationale": "Por qué funciona (1 oración)"}
+  ],
+  "taglines": ["tagline1", "tagline2", "tagline3", "tagline4", "tagline5"],
+  "domains": [
+    {"domain": "nombredominio.com"},
+    {"domain": "nombredominio.io"},
+    {"domain": "nombredominio.co"},
+    {"domain": "getnombredominio.com"},
+    {"domain": "nombredominiohq.com"}
+  ],
+  "brandVoice": "Descripción del tono y voz de la marca"
+}
+
+Genera exactamente 5 nombres de marca, 5 taglines y 5 dominios.`, 1500);
+
+    const data = parseJSON(text);
+    state.brand = data;
+    state.selectedBrandName = '';
+    renderBrand();
+  } catch (e) {
+    showError(e.message);
+  } finally {
+    document.getElementById('step2-loading').style.display = 'none';
+  }
+}
+
+function renderBrand() {
+  // Names
+  document.getElementById('brand-names').innerHTML = state.brand.brandNames.map((b, i) => `
+    <div class="brand-item" id="brand-${i}" onclick="selectBrand(${i}, '${b.name.replace(/'/g, "\\'")}')">
+      <div class="brand-name">${b.name}</div>
+      <div class="brand-rationale">${b.rationale}</div>
+    </div>
+  `).join('');
+
+  // Taglines
+  document.getElementById('taglines').innerHTML = state.brand.taglines.map(t => `
+    <div class="result-item">
+      <div class="result-num">→</div>
+      <div class="result-content"><p>${t}</p></div>
+    </div>
+  `).join('');
+
+  // Domains
+  document.getElementById('domains').innerHTML = state.brand.domains.map(d => `
+    <div class="result-item">
+      <div class="result-num">🌐</div>
+      <div class="result-content"><strong style="font-family:monospace;font-size:0.9rem">${d.domain}</strong></div>
+    </div>
+  `).join('');
+
+  document.getElementById('step2-results').style.display = 'block';
+}
+
+function selectBrand(i, name) {
+  state.selectedBrandName = name;
+  document.querySelectorAll('.brand-item').forEach((el, j) => {
+    el.classList.toggle('selected', j === i);
+  });
+  document.getElementById('btn-step3').disabled = false;
+}
+
+function proceedToStep3() {
+  if (!state.selectedBrandName) { alert('Selecciona un nombre de marca'); return; }
+  setStep(3);
+  generateProduct();
+}
+
+// ─── STEP 3: PRODUCT ─────────────────────────────────────────────────────────
+async function generateProduct() {
+  document.getElementById('step3-loading').style.display = 'block';
+  document.getElementById('step3-results').style.display = 'none';
+
+  try {
+    const text = await callGroq(`
+Eres un experto en creación de productos digitales. Crea la estructura completa de este producto:
+
+Negocio: ${state.selectedIdea.name}
+Marca: ${state.selectedBrandName}
+Formato: ${state.selectedIdea.productFormat}
+Audiencia: ${state.selectedIdea.targetAudience}
+Promesa: ${state.selectedIdea.uniqueSellingProposition}
+
+Responde SOLO con JSON válido:
+{
+  "title": "Título completo del producto",
+  "subtitle": "Subtítulo que amplía la propuesta de valor",
+  "transformationPromise": "La transformación específica que logra el cliente",
+  "format": "${state.selectedIdea.productFormat}",
+  "totalLength": "Extensión/duración total",
+  "chapters": [
+    {
+      "number": 1,
+      "title": "Título del capítulo",
+      "description": "Qué cubre este capítulo",
+      "keyPoints": ["punto clave 1", "punto clave 2", "punto clave 3"]
+    }
+  ],
+  "bonuses": [
+    {"title": "Nombre del bono", "description": "Qué incluye", "value": "$XX"}
+  ],
+  "targetOutcome": "El resultado final concreto que logra el alumno"
+}
+
+Genera entre 6 y 8 capítulos y 3 bonos.`, 2500);
+
+    const data = parseJSON(text);
+    state.product = data;
+    renderProduct();
+  } catch (e) {
+    showError(e.message);
+  } finally {
+    document.getElementById('step3-loading').style.display = 'none';
+  }
+}
+
+function renderProduct() {
+  document.getElementById('product-overview').innerHTML = `
+    <div class="result-header">
+      <div class="result-header-icon">✦</div>
+      <h3>Resumen del Producto</h3>
+    </div>
+    <div class="result-body">
+      <div style="margin-bottom:16px">
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:6px">${state.product.title}</div>
+        <div style="color:var(--muted);font-size:0.9rem;margin-bottom:16px">${state.product.subtitle}</div>
+        <div class="card-meta">
+          <span class="tag accent">🎯 ${state.product.format}</span>
+          <span class="tag">📏 ${state.product.totalLength}</span>
+        </div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:14px;border-left:3px solid var(--accent)">
+        <div style="font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Transformación prometida</div>
+        <div style="font-size:0.9rem">${state.product.transformationPromise}</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('chapters-list').innerHTML = state.product.chapters.map(ch => `
+    <li class="chapter-item">
+      <div class="ch-num">${String(ch.number).padStart(2,'0')}</div>
+      <div>
+        <div class="ch-title">${ch.title}</div>
+        <div class="ch-desc">${ch.description}</div>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
+          ${ch.keyPoints.map(p => `<span class="tag">✓ ${p}</span>`).join('')}
+        </div>
+      </div>
+    </li>
+  `).join('');
+
+  document.getElementById('bonuses-section').innerHTML = `
+    <div class="result-header">
+      <div class="result-header-icon">🎁</div>
+      <h3>Bonos</h3>
+    </div>
+    <div class="result-body">
+      ${state.product.bonuses.map(b => `
+        <div class="result-item">
+          <div class="result-num">+</div>
+          <div class="result-content">
+            <strong>${b.title} <span style="color:var(--accent)">${b.value}</span></strong>
+            <p>${b.description}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('step3-results').style.display = 'block';
+}
+
+function proceedToStep4() {
+  setStep(4);
+  generateSalesPage();
+}
+
+// ─── STEP 4: SALES PAGE ───────────────────────────────────────────────────────
+async function generateSalesPage() {
+  document.getElementById('step4-loading').style.display = 'block';
+  document.getElementById('step4-results').style.display = 'none';
+
+  try {
+    const text = await callGroq(`
+Eres un copywriter experto en ventas. Crea una página de ventas completa para:
+
+Producto: ${state.product.title}
+Marca: ${state.selectedBrandName}
+Audiencia: ${state.selectedIdea.targetAudience}
+Precio: ${state.selectedIdea.priceRange}
+Transformación: ${state.product.transformationPromise}
+
+Responde SOLO con JSON válido:
+{
+  "headline": "Titular principal impactante (máx 12 palabras)",
+  "subheadline": "Subtítulo que amplía el titular (1-2 oraciones)",
+  "heroDescription": "Descripción del héroe (2-3 oraciones)",
+  "problemStatement": "El problema que resuelve (2-3 oraciones)",
+  "solutionIntro": "Introducción a la solución (2-3 oraciones)",
+  "benefits": [
+    {"title": "Beneficio", "description": "Descripción del beneficio", "icon": "emoji"}
+  ],
+  "testimonials": [
+    {"quote": "Testimonio realista", "author": "Nombre Apellido", "result": "Resultado específico logrado"}
+  ],
+  "price": "Precio final",
+  "guarantee": "Garantía ofrecida",
+  "callToAction": "Texto del botón principal",
+  "urgencyText": "Texto de urgencia/escasez"
+}
+
+Genera 6 beneficios y 3 testimonios.`, 2000);
+
+    const data = parseJSON(text);
+    state.salesPage = data;
+    renderSalesPage();
+  } catch (e) {
+    showError(e.message);
+  } finally {
+    document.getElementById('step4-loading').style.display = 'none';
+  }
+}
+
+function renderSalesPage() {
+  const sp = state.salesPage;
+  const html = `
+    <div class="sales-preview">
+      <div class="sp-hero">
+        <div style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;opacity:0.6;margin-bottom:12px">${state.selectedBrandName}</div>
+        <h2 style="font-size:clamp(1.4rem,3vw,2rem);line-height:1.2">${sp.headline}</h2>
+        <p style="margin-top:12px;opacity:0.75;font-size:0.95rem">${sp.subheadline}</p>
+      </div>
+
+      <div class="sp-section">
+        <h3>¿Te identificas con esto?</h3>
+        <p style="color:#444;line-height:1.7;font-size:0.95rem">${sp.problemStatement}</p>
+      </div>
+
+      <div class="sp-section" style="background:#f8f9ff">
+        <h3>La solución que necesitas</h3>
+        <p style="color:#444;line-height:1.7;font-size:0.95rem">${sp.solutionIntro}</p>
+      </div>
+
+      <div class="sp-section">
+        <h3>¿Qué vas a lograr?</h3>
+        <div class="sp-benefits">
+          ${sp.benefits.map(b => `
+            <div class="sp-benefit">
+              <div style="font-size:1.5rem;margin-bottom:8px">${b.icon}</div>
+              <strong>${b.title}</strong>
+              <p>${b.description}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="sp-section" style="background:#f8f9ff">
+        <h3>Lo que dicen nuestros alumnos</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+          ${sp.testimonials.map(t => `
+            <div style="background:white;border-radius:10px;padding:16px;border:1px solid #e8eaf0">
+              <p style="font-size:0.88rem;color:#333;line-height:1.6;margin-bottom:12px;font-style:italic">"${t.quote}"</p>
+              <strong style="font-size:0.85rem">${t.author}</strong>
+              <div style="font-size:0.78rem;color:#4f7cff;margin-top:2px">${t.result}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="sp-cta">
+        <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.6;margin-bottom:8px">Precio especial de lanzamiento</div>
+        <h2 style="font-size:1.6rem">${state.product.title}</h2>
+        <div class="sp-price">${sp.price}</div>
+        <div style="font-size:0.85rem;opacity:0.7;margin-bottom:20px">✓ ${sp.guarantee}</div>
+        <button class="sp-btn">${sp.callToAction}</button>
+        <div style="font-size:0.78rem;opacity:0.5;margin-top:16px">${sp.urgencyText}</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('sales-preview').innerHTML = html;
+  document.getElementById('step4-results').style.display = 'block';
+}
+
+// ─── DOWNLOAD ─────────────────────────────────────────────────────────────────
+function downloadSalesPage() {
+  const sp = state.salesPage;
+  const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${state.product.title} — ${state.selectedBrandName}</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;color:#111}
+.hero{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:white;padding:80px 40px;text-align:center}
+.hero h1{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:16px;line-height:1.2}
+.hero p{font-size:1.05rem;opacity:0.8;max-width:600px;margin:0 auto}
+.section{padding:60px 40px;max-width:900px;margin:0 auto}
+.section h2{font-size:1.6rem;margin-bottom:24px;font-weight:800}
+.benefits{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.benefit{background:#f8f9ff;border-radius:12px;padding:20px}
+.benefit strong{display:block;margin-bottom:6px}
+.testimonials{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.testimonial{background:#f0f2ff;border-radius:12px;padding:20px}
+.cta{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:white;text-align:center;padding:80px 40px}
+.cta h2{font-size:2rem;color:white;margin-bottom:16px}
+.price{font-size:3.5rem;font-weight:800;color:#4f7cff;margin:20px 0}
+.btn{background:#4f7cff;color:white;border:none;padding:18px 48px;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer}
+</style>
+
+</head>
+<body>
+<div class="hero">
+  <div style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;opacity:0.5;margin-bottom:16px">${state.selectedBrandName}</div>
+  <h1>${sp.headline}</h1>
+  <p>${sp.subheadline}</p>
+</div>
+<div class="section"><h2>¿Te identificas?</h2><p style="line-height:1.8;color:#555">${sp.problemStatement}</p></div>
+<div style="background:#f8f9ff"><div class="section"><h2>La solución</h2><p style="line-height:1.8;color:#555">${sp.solutionIntro}</p></div></div>
+<div class="section"><h2>Lo que vas a lograr</h2><div class="benefits">${sp.benefits.map(b=>`<div class="benefit"><div style="font-size:2rem;margin-bottom:8px">${b.icon}</div><strong>${b.title}</strong><p style="font-size:0.88rem;color:#666">${b.description}</p></div>`).join('')}</div></div>
+<div style="background:#f8f9ff"><div class="section"><h2>Resultados reales</h2><div class="testimonials">${sp.testimonials.map(t=>`<div class="testimonial"><p style="font-style:italic;color:#333;margin-bottom:12px">"${t.quote}"</p><strong>${t.author}</strong><div style="font-size:0.82rem;color:#4f7cff">${t.result}</div></div>`).join('')}</div></div></div>
+<div class="cta">
+  <h2>${state.product.title}</h2>
+  <div class="price">${sp.price}</div>
+  <div style="opacity:0.7;margin-bottom:24px">✓ ${sp.guarantee}</div>
+  <button class="btn">${sp.callToAction}</button>
+  <div style="opacity:0.4;font-size:0.82rem;margin-top:16px">${sp.urgencyText}</div>
+</div>
+</body>
+</html>`;
+
+const blob = new Blob([html], {type: ‘text/html’});
+const a = document.createElement(‘a’);
+a.href = URL.createObjectURL(blob);
+a.download = state.selectedBrandName.replace(/\s+/g, ‘-’).toLowerCase() + ‘-sales-page.html’;
+a.click();
+}
+
+function startOver() {
+state.selectedIdea = null;
+state.brand = null;
+state.selectedBrandName = ‘’;
+state.product = null;
+state.salesPage = null;
+document.getElementById(‘nicheInput’).value = ‘’;
+document.getElementById(‘step1-form’).style.display = ‘block’;
+document.getElementById(‘step1-results’).style.display = ‘none’;
+setStep(1);
+}
+</script>
+
+</body>
+</html>
