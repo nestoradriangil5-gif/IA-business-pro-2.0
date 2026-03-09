@@ -5,8 +5,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return res.status(500).json({ error: 'GEMINI_API_KEY no configurada en Vercel' });
+  const apiKey = 'TU_CLAVE_AQUI'; // pega tu clave AIza... aquí
 
   try {
     const { prompt } = req.body;
@@ -19,7 +18,7 @@ export default async function handler(req, res) {
       }
     );
     const data = await response.json();
-    if (!response.ok) return res.status(500).json({ error: data.error?.message || 'Error de Gemini' });
+    if (!response.ok) return res.status(500).json({ error: data.error?.message || 'Error' });
     const text = data.candidates[0].content.parts[0].text;
     res.status(200).json({ text });
   } catch (e) {
