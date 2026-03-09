@@ -311,23 +311,20 @@ function goStep(n){
 }
 
 function callAI(prompt,cb){
-  var key='AIzaSyDueTmuzXmTlkHodwUlo3EvbaBwWbeyEgw';
   var xhr=new XMLHttpRequest();
-  xhr.open('POST','https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+key,true);
+  xhr.open('POST','/api/ai',true);
   xhr.setRequestHeader('Content-Type','application/json');
   xhr.onload=function(){
     if(xhr.status===200){
-      try{
-        var d=JSON.parse(xhr.responseText);
-        cb(null,d.candidates[0].content.parts[0].text);
-      }catch(e){cb('Error al procesar respuesta');}
+      try{var d=JSON.parse(xhr.responseText);cb(null,d.text);}
+      catch(e){cb('Error al procesar respuesta');}
     } else {
-      try{var er=JSON.parse(xhr.responseText);cb(er.error&&er.error.message?er.error.message:'Error '+xhr.status);}
+      try{var er=JSON.parse(xhr.responseText);cb(er.error||'Error '+xhr.status);}
       catch(x){cb('Error '+xhr.status);}
     }
   };
-  xhr.onerror=function(){cb('Error de red');};
-  xhr.send(JSON.stringify({contents:[{parts:[{text:prompt}]}]}));
+  xhr.onerror=function(){cb('Error de conexión');};
+  xhr.send(JSON.stringify({prompt:prompt}));
 }
 
 window.addEventListener('DOMContentLoaded',function(){
