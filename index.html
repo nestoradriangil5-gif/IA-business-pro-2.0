@@ -168,10 +168,10 @@ h1{font-size:1.7rem}
 <!-- API KEY BAR -->
 
 <div class="apibar">
-  <div class="apibar-title">🔑 Groq API Key — pégala y se activa sola (gratis en console.groq.com)</div>
-  <input type="text" id="keyInput" placeholder="Pega tu clave aquí: gsk_..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="width:100%;margin-bottom:10px"/>
+  <div class="apibar-title">🔑 Google AI Key — pégala y se activa sola (gratis en aistudio.google.com)</div>
+  <input type="text" id="keyInput" placeholder="Pega tu Google AI key: AIza..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="width:100%;margin-bottom:10px"/>
   <div id="apiOk" style="display:none;color:var(--accent);font-size:.85rem;">✓ Clave detectada — ahora genera tu negocio</div>
-  <div id="apiNo" style="color:var(--muted);font-size:.82rem;">Pega tu clave de Groq arriba para comenzar</div>
+  <div id="apiNo" style="color:var(--muted);font-size:.82rem;">Pega tu Google AI key arriba para comenzar</div>
 </div>
 
 <!-- STEP 1 -->
@@ -303,17 +303,18 @@ function goS4(){ goStep(4); genSales(); }
 
 // GROQ CALL
 function callGroq(prompt, cb){
-if(!S.key){ alert(‘Primero activa tu Groq API Key arriba ↑’); return; }
+if(!S.key){ alert(‘Primero pega tu Google AI API Key arriba’); return; }
+var url = ‘https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=’ + S.key;
 var xhr = new XMLHttpRequest();
-xhr.open(‘POST’,‘https://api.groq.com/openai/v1/chat/completions’,true);
+xhr.open(‘POST’, url, true);
 xhr.setRequestHeader(‘Content-Type’,‘application/json’);
-xhr.setRequestHeader(‘Authorization’,’Bearer ’+S.key);
 xhr.onload = function(){
 if(xhr.status===200){
 try{
 var d = JSON.parse(xhr.responseText);
-cb(null, d.choices[0].message.content);
-}catch(e){ cb(‘Error al parsear respuesta’); }
+var text = d.candidates[0].content.parts[0].text;
+cb(null, text);
+}catch(e){ cb(’Error al parsear respuesta: ’+e.message); }
 } else {
 try{
 var e = JSON.parse(xhr.responseText);
@@ -323,9 +324,7 @@ cb(e.error && e.error.message ? e.error.message : ’Error ’+xhr.status);
 };
 xhr.onerror = function(){ cb(‘Error de red — verifica tu conexión’); };
 xhr.send(JSON.stringify({
-model:‘llama-3.3-70b-versatile’,
-max_tokens:2000,
-messages:[{role:‘user’,content:prompt}]
+contents:[{parts:[{text:prompt}]}]
 }));
 }
 
@@ -345,7 +344,7 @@ setTimeout(function(){d.remove();},6000);
 function genIdeas(){
 var niche=document.getElementById(‘nicheIn’).value.trim();
 if(!niche){alert(‘Escribe tu nicho primero’);return;}
-if(!S.key){alert(‘Primero activa tu Groq API Key arriba ↑’);return;}
+if(!S.key){alert(‘Primero pega tu Google AI key arriba’);return;}
 S.niche=niche; S.idea=null;
 document.getElementById(‘s1form’).style.display=‘none’;
 document.getElementById(‘s1load’).style.display=‘flex’;
