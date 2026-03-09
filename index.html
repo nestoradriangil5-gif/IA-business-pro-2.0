@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -8,527 +7,140 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#080b12;--surface:#0f1420;--surface2:#151c2e;
-  --border:#1e2a42;--primary:#4f7cff;--accent:#00e5a0;
-  --text:#e8edf8;--muted:#5a6a8a;
-}
+:root{--bg:#080b12;--surface:#0f1420;--surface2:#151c2e;--border:#1e2a42;--primary:#4f7cff;--accent:#00e5a0;--text:#e8edf8;--muted:#5a6a8a}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);background:rgba(8,11,18,0.95);position:sticky;top:0;z-index:10}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);background:rgba(8,11,18,.95);position:sticky;top:0;z-index:10}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
 .logo span{color:var(--primary)}
 main{max-width:820px;margin:0 auto;padding:32px 20px 80px}
-
-/* STEPS */
 .steps{display:flex;align-items:center;margin-bottom:36px;gap:4px}
 .step{display:flex;align-items:center;gap:8px;opacity:.35;transition:.3s}
-.step.active{opacity:1}
-.step.done{opacity:.6}
-.step-n{width:28px;height:28px;border-radius:50%;border:2px solid var(–border);display:flex;align-items:center;justify-content:center;font-family:‘Syne’,sans-serif;font-weight:800;font-size:.7rem;flex-shrink:0;transition:.3s}
-.step.active .step-n{border-color:var(–primary);color:var(–primary)}
-.step.done .step-n{border-color:var(–accent);color:var(–accent)}
+.step.active{opacity:1}.step.done{opacity:.6}
+.step-n{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.7rem;flex-shrink:0;transition:.3s}
+.step.active .step-n{border-color:var(--primary);color:var(--primary)}
+.step.done .step-n{border-color:var(--accent);color:var(--accent)}
 .step-l{font-size:.75rem;font-weight:500;white-space:nowrap}
-.sep{flex:1;height:1px;background:var(–border);max-width:32px}
-
-/* PANELS */
-.panel{display:none;animation:up .35s ease}
-.panel.active{display:block}
+.sep{flex:1;height:1px;background:var(--border);max-width:32px}
+.panel{display:none;animation:up .35s ease}.panel.active{display:block}
 @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
-/* TYPOGRAPHY */
-h1{font-family:‘Syne’,sans-serif;font-weight:800;font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:10px}
-.grad{background:linear-gradient(135deg,var(–primary),var(–accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sub{color:var(–muted);font-size:1rem;line-height:1.6;margin-bottom:28px}
-h2{font-family:‘Syne’,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-.02em;margin-bottom:8px}
-h3{font-family:‘Syne’,sans-serif;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(–muted)}
-
-/* FORM */
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:10px}
+.grad{background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{color:var(--muted);font-size:1rem;line-height:1.6;margin-bottom:28px}
+h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-.02em;margin-bottom:8px}
+h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .field{margin-bottom:16px}
-label{display:block;font-size:.78rem;font-weight:500;color:var(–muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
-input,textarea{width:100%;background:var(–surface);border:1.5px solid var(–border);border-radius:10px;padding:13px 15px;color:var(–text);font-family:‘DM Sans’,sans-serif;font-size:.95rem;outline:none;transition:.2s;-webkit-appearance:none}
-input:focus,textarea:focus{border-color:var(–primary);box-shadow:0 0 0 3px rgba(79,124,255,.15)}
-textarea{min-height:80px;resize:vertical}
-
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:13px 24px;border-radius:10px;font-family:‘Syne’,sans-serif;font-weight:700;font-size:.88rem;border:none;cursor:pointer;transition:.2s;-webkit-appearance:none;touch-action:manipulation}
-.btn-p{background:var(–primary);color:#fff}
-.btn-p:active{background:#6b8fff;transform:scale(.98)}
-.btn-g{background:transparent;color:var(–muted);border:1.5px solid var(–border)}
-.btn-g:active{color:var(–text)}
-.btn-a{background:var(–accent);color:#080b12}
-.btn-a:active{background:#00ffb3;transform:scale(.98)}
+label{display:block;font-size:.78rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+input,textarea{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:13px 15px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;outline:none;transition:.2s;-webkit-appearance:none}
+input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,124,255,.15)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:13px 24px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;border:none;cursor:pointer;transition:.2s;-webkit-appearance:none;touch-action:manipulation;user-select:none}
+.btn-p{background:var(--primary);color:#fff}.btn-p:active{opacity:.85}
+.btn-g{background:transparent;color:var(--muted);border:1.5px solid var(--border)}.btn-g:active{color:var(--text)}
+.btn-a{background:var(--accent);color:#080b12}.btn-a:active{opacity:.85}
 .btn:disabled{opacity:.4;pointer-events:none}
 .btns{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
-
-/* API KEY BAR */
-.apibar{background:var(–surface);border:1.5px solid var(–border);border-radius:12px;padding:16px;margin-bottom:28px}
-.apibar-title{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(–accent);margin-bottom:10px}
-.apibar-row{display:flex;gap:10px;align-items:stretch}
-.apibar-row input{flex:1;margin:0}
-.apibar-row .btn{padding:13px 18px;white-space:nowrap;flex-shrink:0}
-.api-ok{display:none;align-items:center;gap:8px;font-size:.85rem;color:var(–accent);margin-top:10px}
-
-/* CARDS */
-.card{background:var(–surface);border:1.5px solid var(–border);border-radius:12px;padding:20px;margin-bottom:12px;cursor:pointer;transition:.2s;-webkit-tap-highlight-color:transparent}
-.card:active{border-color:var(–primary)}
-.card.sel{border-color:var(–primary);background:rgba(79,124,255,.08);box-shadow:0 0 0 1px var(–primary)}
-.card-title{font-family:‘Syne’,sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px}
-.card-desc{color:var(–muted);font-size:.87rem;line-height:1.6}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;cursor:pointer;transition:.2s;-webkit-tap-highlight-color:transparent}
+.card.sel{border-color:var(--primary);background:rgba(79,124,255,.08);box-shadow:0 0 0 1px var(--primary)}
+.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px}
+.card-desc{color:var(--muted);font-size:.87rem;line-height:1.6}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.tag{background:var(–surface2);border:1px solid var(–border);border-radius:6px;padding:3px 9px;font-size:.73rem;color:var(–muted)}
-.tag-a{border-color:var(–accent);color:var(–accent);background:rgba(0,229,160,.08)}
-.tag-p{border-color:var(–primary);color:var(–primary);background:rgba(79,124,255,.08)}
-
-/* BRAND GRID */
+.tag{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:.73rem;color:var(--muted)}
+.tag-a{border-color:var(--accent);color:var(--accent);background:rgba(0,229,160,.08)}
+.tag-p{border-color:var(--primary);color:var(--primary);background:rgba(79,124,255,.08)}
 .bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:14px}
-.bitem{background:var(–surface2);border:1.5px solid var(–border);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.2s;-webkit-tap-highlight-color:transparent}
-.bitem:active{border-color:var(–primary)}
-.bitem.sel{border-color:var(–accent);background:rgba(0,229,160,.08)}
-.bname{font-family:‘Syne’,sans-serif;font-weight:700;font-size:.9rem;margin-bottom:4px}
-.brat{font-size:.72rem;color:var(–muted)}
-
-/* SECTIONS */
-.sec{background:var(–surface);border:1.5px solid var(–border);border-radius:12px;overflow:hidden;margin-bottom:14px}
-.sec-head{padding:14px 20px;border-bottom:1px solid var(–border);display:flex;align-items:center;gap:10px}
+.bitem{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.2s}
+.bitem.sel{border-color:var(--accent);background:rgba(0,229,160,.08)}
+.bname{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:4px}
+.brat{font-size:.72rem;color:var(--muted)}
+.sec{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.sec-head{padding:14px 20px;border-bottom:1px solid var(--border)}
 .sec-body{padding:20px}
-.row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(–border);align-items:flex-start}
+.row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start}
 .row:last-child{border:none;padding-bottom:0}
-.rnum{font-family:‘Syne’,sans-serif;font-weight:800;font-size:.72rem;color:var(–primary);min-width:20px;margin-top:2px}
+.rnum{font-family:'Syne',sans-serif;font-weight:800;font-size:.72rem;color:var(--primary);min-width:20px;margin-top:2px}
 .rtxt strong{display:block;font-weight:600;margin-bottom:3px;font-size:.92rem}
-.rtxt p{color:var(–muted);font-size:.84rem;line-height:1.6}
-
-/* LOADING */
+.rtxt p{color:var(--muted);font-size:.84rem;line-height:1.6}
 .load{display:flex;flex-direction:column;align-items:center;gap:14px;padding:50px 20px;text-align:center}
-.spin{width:40px;height:40px;border:3px solid var(–border);border-top-color:var(–primary);border-radius:50%;animation:spin .7s linear infinite}
+.spin{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.load p{color:var(–muted);font-size:.9rem}
-.load strong{font-family:‘Syne’,sans-serif;font-size:1rem;color:var(–text);display:block;margin-bottom:4px}
-
-/* CHAPTERS */
+.load p{color:var(--muted);font-size:.9rem}
+.load strong{font-family:'Syne',sans-serif;font-size:1rem;color:var(--text);display:block;margin-bottom:4px}
 .chlist{list-style:none}
-.chitem{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(–border)}
+.chitem{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
 .chitem:last-child{border:none}
-.chnum{font-family:‘Syne’,sans-serif;font-weight:800;font-size:1.3rem;color:var(–border);min-width:36px;line-height:1}
+.chnum{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--border);min-width:36px;line-height:1}
 .chtitle{font-weight:600;margin-bottom:3px}
-.chdesc{font-size:.85rem;color:var(–muted);line-height:1.6}
-
-/* SALES PREVIEW */
+.chdesc{font-size:.85rem;color:var(--muted);line-height:1.6}
 .sp{background:#fff;color:#111;border-radius:12px;overflow:hidden;margin-bottom:16px}
-.sp-hero{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:#fff;padding:50px 28px;text-align:center}
-.sp-hero h2{font-size:clamp(1.3rem,3vw,1.8rem);margin-bottom:10px;color:#fff;line-height:1.3}
-.sp-hero p{opacity:.75;font-size:.95rem}
-.sp-sec{padding:32px 28px;border-bottom:1px solid #eee}
-.sp-sec h3{font-size:1.1rem;font-weight:700;margin-bottom:14px;color:#111;text-transform:none;letter-spacing:0}
-.bens{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.ben{background:#f8f9ff;border-radius:10px;padding:14px}
-.ben strong{display:block;margin-bottom:4px;font-size:.88rem}
-.ben p{font-size:.8rem;color:#666}
-.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.testi{background:#f0f2ff;border-radius:10px;padding:14px}
-.testi p{font-size:.85rem;color:#333;font-style:italic;margin-bottom:10px;line-height:1.6}
-.testi strong{font-size:.82rem}
-.testi span{display:block;font-size:.76rem;color:#4f7cff;margin-top:2px}
-.sp-cta{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:#fff;text-align:center;padding:50px 28px}
-.sp-cta h2{color:#fff;font-size:1.5rem;margin-bottom:12px}
-.sp-price{font-size:3rem;font-weight:800;color:#4f7cff;margin:14px 0}
-.sp-btn{background:#4f7cff;color:#fff;border:none;padding:15px 36px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer}
-
-/* ALERT */
-.err{background:rgba(255,79,106,.1);border:1px solid rgba(255,79,106,.3);border-radius:10px;padding:12px 16px;font-size:.85rem;color:#ff8fa0;margin-bottom:16px}
-
-@media(max-width:500px){
-.step-l{display:none}
-h1{font-size:1.7rem}
-.sp-hero{padding:36px 20px}
-.sp-sec{padding:24px 20px}
-.sp-cta{padding:36px 20px}
-}
-</style>
-
-</head>
-<body>
-<header>
-  <div class="logo">AI <span>Business</span> Builder</div>
-  <div style="font-size:.78rem;color:var(--muted)" id="api-status">Sin clave</div>
-</header>
-<main>
-
-<!-- STEPS NAV -->
-
-<div class="steps">
-  <div class="step active" id="n1"><div class="step-n">1</div><span class="step-l">Ideas</span></div>
-  <div class="sep"></div>
-  <div class="step" id="n2"><div class="step-n">2</div><span class="step-l">Marca</span></div>
-  <div class="sep"></div>
-  <div class="step" id="n3"><div class="step-n">3</div><span class="step-l">Producto</span></div>
-  <div class="sep"></div>
-  <div class="step" id="n4"><div class="step-n">4</div><span class="step-l">Ventas</span></div>
-</div>
-
-<!-- API KEY BAR -->
-
-<div class="apibar">
-  <div class="apibar-title">🔑 Google AI Key — pégala y se activa sola (gratis en aistudio.google.com)</div>
-  <input type="text" id="keyInput" placeholder="Pega tu Google AI key: AIza..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="width:100%;margin-bottom:10px"/>
-  <div id="apiOk" style="display:none;color:var(--accent);font-size:.85rem;">✓ Clave detectada — ahora genera tu negocio</div>
-  <div id="apiNo" style="color:var(--muted);font-size:.82rem;">Pega tu Google AI key arriba para comenzar</div>
-</div>
-
-<!-- STEP 1 -->
-
-<div class="panel active" id="p1">
-  <h1>Tu negocio<br><span class="grad">empieza aquí</span></h1>
-  <p class="sub">Describe tu nicho y la IA generará 4 ideas con modelo de monetización, audiencia y precio.</p>
-  <div id="s1form">
-    <div class="field">
-      <label>¿En qué nicho quieres emprender?</label>
-      <input type="text" id="nicheIn" placeholder="Ej: fitness para mujeres mayores de 40..."/>
-    </div>
-    <button class="btn btn-p" id="btnIdeas">⚡ Generar 4 Ideas</button>
-  </div>
-  <div class="load" id="s1load" style="display:none"><div class="spin"></div><div><strong>Analizando tu nicho</strong><p>Creando ideas únicas y validadas...</p></div></div>
-  <div id="s1res" style="display:none">
-    <div id="ideasList"></div>
-    <div class="btns">
-      <button class="btn btn-p" id="btnS2" disabled>Continuar →</button>
-      <button class="btn btn-g" onclick="genIdeas()">↺ Regenerar</button>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 2 -->
-
-<div class="panel" id="p2">
-  <h2>Tu <span class="grad">Marca</span></h2>
-  <p class="sub">Nombres, taglines y dominios generados por IA.</p>
-  <div class="load" id="s2load"><div class="spin"></div><div><strong>Construyendo tu marca</strong><p>Nombres, taglines, dominios...</p></div></div>
-  <div id="s2res" style="display:none">
-    <div class="sec"><div class="sec-head"><h3>Nombres</h3></div><div class="sec-body"><p style="font-size:.8rem;color:var(--muted);margin-bottom:12px">Toca uno para seleccionarlo</p><div class="bgrid" id="brandNames"></div></div></div>
-    <div class="sec"><div class="sec-head"><h3>Taglines</h3></div><div class="sec-body" id="taglines"></div></div>
-    <div class="sec"><div class="sec-head"><h3>Dominios sugeridos</h3></div><div class="sec-body" id="domains"></div></div>
-    <div class="btns">
-      <button class="btn btn-p" id="btnS3" disabled>Crear producto →</button>
-      <button class="btn btn-g" onclick="genBrand()">↺ Regenerar</button>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 3 -->
-
-<div class="panel" id="p3">
-  <h2>Tu <span class="grad">Producto</span></h2>
-  <p class="sub">Estructura completa con capítulos, ejercicios y bonos.</p>
-  <div class="load" id="s3load"><div class="spin"></div><div><strong>Diseñando tu producto</strong><p>Capítulos, ejercicios, bonos...</p></div></div>
-  <div id="s3res" style="display:none">
-    <div class="sec" id="prodOverview"></div>
-    <div class="sec"><div class="sec-head"><h3>Capítulos</h3></div><div class="sec-body"><ul class="chlist" id="chapList"></ul></div></div>
-    <div class="sec" id="bonusSec"></div>
-    <div class="btns">
-      <button class="btn btn-a" onclick="goS4()">✦ Crear página de ventas →</button>
-      <button class="btn btn-g" onclick="genProduct()">↺ Regenerar</button>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 4 -->
-
-<div class="panel" id="p4">
-  <h2>Tu <span class="grad">Página de Ventas</span></h2>
-  <p class="sub">Lista para publicar y vender.</p>
-  <div class="load" id="s4load"><div class="spin"></div><div><strong>Escribiendo tu copy</strong><p>Titulares, beneficios, testimonios...</p></div></div>
-  <div id="s4res" style="display:none">
-    <div class="btns" style="margin-top:0;margin-bottom:20px">
-      <button class="btn btn-a" onclick="dlSales()">⬇ Descargar HTML</button>
-      <button class="btn btn-g" onclick="genSales()">↺ Regenerar</button>
-      <button class="btn btn-g" onclick="restart()">✦ Nuevo negocio</button>
-    </div>
-    <div id="salesPrev"></div>
-  </div>
-</div>
-
-</main>
-<script>
-// STATE
-var S = {
-  key:'', step:1,
-  niche:'', ideas:[], idea:null,
-  brand:null, brandName:'',
-  product:null, sales:null
-};
-
-// INIT
-(function(){
-var ki = document.getElementById(‘keyInput’);
-
-function checkKey(){
-var v = ki.value.trim();
-if(v.length > 10){
-S.key = v;
-document.getElementById(‘apiOk’).style.display = ‘block’;
-document.getElementById(‘apiNo’).style.display = ‘none’;
-document.getElementById(‘api-status’).textContent = ‘✓ Clave activa’;
-document.getElementById(‘api-status’).style.color = ‘var(–accent)’;
-} else {
-S.key = ‘’;
-document.getElementById(‘apiOk’).style.display = ‘none’;
-document.getElementById(‘apiNo’).style.display = ‘block’;
-document.getElementById(‘api-status’).textContent = ‘Sin clave’;
-document.getElementById(‘api-status’).style.color = ‘’;
-}
-}
-
-ki.oninput = checkKey;
-ki.onchange = checkKey;
-ki.onpaste = function(){ setTimeout(checkKey, 100); };
-
-document.getElementById(‘btnIdeas’).onclick = genIdeas;
-document.getElementById(‘btnS2’).onclick = function(){ goStep(2); genBrand(); };
-document.getElementById(‘btnS3’).onclick = function(){ goStep(3); genProduct(); };
-})();
-
-// STEP NAV
-function goStep(n){
-document.querySelectorAll(’.panel’).forEach(function(p,i){
-p.classList.toggle(‘active’, i===n-1);
-});
-document.querySelectorAll(’.step’).forEach(function(el,i){
-el.classList.remove(‘active’,‘done’);
-if(i===n-1) el.classList.add(‘active’);
-else if(i<n-1) el.classList.add(‘done’);
-});
-S.step=n;
-window.scrollTo(0,0);
-}
-function goS4(){ goStep(4); genSales(); }
-
-// GROQ CALL
-function callGroq(prompt, cb){
-if(!S.key){ alert(‘Primero pega tu Google AI API Key arriba’); return; }
-var url = ‘https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=’ + S.key;
-var xhr = new XMLHttpRequest();
-xhr.open(‘POST’, url, true);
-xhr.setRequestHeader(‘Content-Type’,‘application/json’);
-xhr.onload = function(){
-if(xhr.status===200){
-try{
-var d = JSON.parse(xhr.responseText);
-var text = d.candidates[0].content.parts[0].text;
-cb(null, text);
-}catch(e){ cb(’Error al parsear respuesta: ’+e.message); }
-} else {
-try{
-var e = JSON.parse(xhr.responseText);
-cb(e.error && e.error.message ? e.error.message : ’Error ’+xhr.status);
-}catch(x){ cb(’Error ’+xhr.status); }
-}
-};
-xhr.onerror = function(){ cb(‘Error de red — verifica tu conexión’); };
-xhr.send(JSON.stringify({
-contents:[{parts:[{text:prompt}]}]
-}));
-}
-
-function parseJ(txt){
-return JSON.parse(txt.replace(/^`json\s*/m,'').replace(/^`\s*/m,’’).replace(/```\s*$/m,’’).trim());
-}
-
-function showErr(msg){
-var d=document.createElement(‘div’);
-d.className=‘err’;d.textContent=‘⚠ ‘+msg;
-var panel=document.querySelector(’.panel.active’);
-panel.insertBefore(d,panel.firstChild);
-setTimeout(function(){d.remove();},6000);
-}
-
-// STEP 1
-function genIdeas(){
-var niche=document.getElementById(‘nicheIn’).value.trim();
-if(!niche){alert(‘Escribe tu nicho primero’);return;}
-if(!S.key){alert(‘Primero pega tu Google AI key arriba’);return;}
-S.niche=niche; S.idea=null;
-document.getElementById(‘s1form’).style.display=‘none’;
-document.getElementById(‘s1load’).style.display=‘flex’;
-document.getElementById(‘s1res’).style.display=‘none’;
-
-callGroq(‘Eres experto en negocios digitales. Genera 4 ideas para el nicho: “’+niche+’”. Responde SOLO JSON válido sin texto extra:\n{“ideas”:[{“name”:“nombre”,“description”:“descripción 2-3 oraciones”,“targetAudience”:“audiencia específica”,“monetizationModel”:“cómo gana dinero”,“productFormat”:“Curso/SaaS/Ebook/Membresía”,“uniqueSellingProposition”:“qué lo hace único”,“priceRange”:“precio sugerido”}]}’, function(err,txt){
-document.getElementById(‘s1load’).style.display=‘none’;
-if(err){showErr(err);document.getElementById(‘s1form’).style.display=‘block’;return;}
-try{
-S.ideas=parseJ(txt).ideas;
-renderIdeas();
-}catch(e){showErr(‘Error al procesar respuesta. Intenta de nuevo.’);document.getElementById(‘s1form’).style.display=‘block’;}
-});
-}
-
-function renderIdeas(){
-var html=S.ideas.map(function(idea,i){
-return ‘<div class="card" id="id'+i+'" onclick="selIdea('+i+')">’+
-‘<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">’+
-‘<div class="card-title">’+idea.name+’</div>’+
-‘<span class="tag tag-p">’+idea.productFormat+’</span></div>’+
-‘<div class="card-desc" style="margin-top:6px">’+idea.description+’</div>’+
-‘<div class="tags"><span class="tag">👥 ‘+idea.targetAudience+’</span>’+
-‘<span class="tag tag-a">’+idea.priceRange+’</span>’+
-‘<span class="tag">💡 ‘+idea.monetizationModel+’</span></div></div>’;
-}).join(’’);
-document.getElementById(‘ideasList’).innerHTML=html;
-document.getElementById(‘s1res’).style.display=‘block’;
-document.getElementById(‘s1form’).style.display=‘block’;
-}
-
-function selIdea(i){
-S.idea=S.ideas[i];
-document.querySelectorAll(’#ideasList .card’).forEach(function(c,j){
-c.classList.toggle(‘sel’,j===i);
-});
-document.getElementById(‘btnS2’).disabled=false;
-}
-
-// STEP 2
-function genBrand(){
-document.getElementById(‘s2load’).style.display=‘flex’;
-document.getElementById(‘s2res’).style.display=‘none’;
-S.brandName=’’;
-
-callGroq(‘Crea kit de marca para: Negocio: ‘+S.idea.name+’. Desc: ‘+S.idea.description+’. Audiencia: ‘+S.idea.targetAudience+’. Formato: ‘+S.idea.productFormat+’. Responde SOLO JSON:\n{“brandNames”:[{“name”:“Nombre”,“rationale”:“por qué funciona”}],“taglines”:[“t1”,“t2”,“t3”,“t4”,“t5”],“domains”:[{“domain”:“x.com”},{“domain”:“x.io”},{“domain”:“x.co”},{“domain”:“getx.com”},{“domain”:“xhq.com”}]}\nExactamente 5 nombres, 5 taglines, 5 dominios.’, function(err,txt){
-document.getElementById(‘s2load’).style.display=‘none’;
-if(err){showErr(err);return;}
-try{
-S.brand=parseJ(txt);
-renderBrand();
-}catch(e){showErr(‘Error al procesar. Intenta regenerar.’);}
-});
-}
-
-function renderBrand(){
-document.getElementById(‘brandNames’).innerHTML=S.brand.brandNames.map(function(b,i){
-return ‘<div class=“bitem” id=“bn’+i+’” onclick=“selBrand(’+i+’,'’+b.name.replace(/’/g,”\’”)+’')”>’+’<div class="bname">’+b.name+’</div><div class="brat">’+b.rationale+’</div></div>’;
-}).join(’’);
-
-document.getElementById(‘taglines’).innerHTML=S.brand.taglines.map(function(t){
-return ‘<div class="row"><div class="rnum">→</div><div class="rtxt"><p>’+t+’</p></div></div>’;
-}).join(’’);
-
-document.getElementById(‘domains’).innerHTML=S.brand.domains.map(function(d){
-return ‘<div class="row"><div class="rnum">🌐</div><div class="rtxt"><strong style="font-family:monospace;font-size:.88rem">’+d.domain+’</strong></div></div>’;
-}).join(’’);
-
-document.getElementById(‘s2res’).style.display=‘block’;
+< truncated lines 74-267 >
+  document.getElementById('domains').innerHTML=S.brand.domains.map(function(d){return '<div class="row"><div class="rnum">🌐</div><div class="rtxt"><strong style="font-family:monospace;font-size:.88rem">'+d.domain+'</strong></div></div>';}).join('');
+  document.getElementById('s2res').style.display='block';
 }
 
 function selBrand(i,name){
-S.brandName=name;
-document.querySelectorAll(’.bitem’).forEach(function(el,j){el.classList.toggle(‘sel’,j===i);});
-document.getElementById(‘btnS3’).disabled=false;
+  S.brandName=name;
+  document.querySelectorAll('.bitem').forEach(function(el,j){el.classList.toggle('sel',j===i);});
+  document.getElementById('btnS3').disabled=false;
 }
 
 // STEP 3
-function genProduct(){
-document.getElementById(‘s3load’).style.display=‘flex’;
-document.getElementById(‘s3res’).style.display=‘none’;
+document.getElementById('btnS3').onclick=function(){goStep(3);genProduct();};
+document.getElementById('btnRegen3').onclick=genProduct;
 
-callGroq(‘Crea estructura de producto digital. Negocio: ‘+S.idea.name+’. Marca: ‘+S.brandName+’. Formato: ‘+S.idea.productFormat+’. Audiencia: ‘+S.idea.targetAudience+’. Promesa: ‘+S.idea.uniqueSellingProposition+’. Responde SOLO JSON:\n{“title”:“título”,“subtitle”:“subtítulo”,“transformationPromise”:“transformación específica”,“format”:”’+S.idea.productFormat+’”,“totalLength”:“extensión total”,“chapters”:[{“number”:1,“title”:“título”,“description”:“descripción”,“keyPoints”:[“p1”,“p2”,“p3”]}],“bonuses”:[{“title”:“bono”,“description”:“qué incluye”,“value”:”$XX”}],“targetOutcome”:“resultado final”}\nGenera 6-8 capítulos y 3 bonos.’, function(err,txt){
-document.getElementById(‘s3load’).style.display=‘none’;
-if(err){showErr(err);return;}
-try{
-S.product=parseJ(txt);
-renderProduct();
-}catch(e){showErr(‘Error al procesar. Intenta regenerar.’);}
-});
+function genProduct(){
+  document.getElementById('s3load').style.display='flex';
+  document.getElementById('s3res').style.display='none';
+  ai('Crea estructura de producto digital. Negocio: '+S.idea.name+'. Marca: '+S.brandName+'. Formato: '+S.idea.productFormat+'. Audiencia: '+S.idea.targetAudience+'. Promesa: '+S.idea.uniqueSellingProposition+'. Responde SOLO JSON:\n{"title":"título","subtitle":"subtítulo","transformationPromise":"transformación específica","format":"'+S.idea.productFormat+'","totalLength":"extensión total","chapters":[{"number":1,"title":"título","description":"descripción","keyPoints":["p1","p2","p3"]}],"bonuses":[{"title":"bono","description":"qué incluye","value":"$XX"}],"targetOutcome":"resultado final"}\nGenera 6-8 capítulos y 3 bonos.',
+  function(err,txt){
+    document.getElementById('s3load').style.display='none';
+    if(err){showErr(err);return;}
+    try{S.product=parseJ(txt);renderProduct();}
+    catch(e){showErr('Error al procesar. Intenta regenerar.');}
+  });
 }
 
 function renderProduct(){
-document.getElementById(‘prodOverview’).innerHTML=
-‘<div class="sec-head"><h3>Resumen</h3></div>’+
-‘<div class="sec-body">’+
-‘<div style="font-family:\'Syne\',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:6px">’+S.product.title+’</div>’+
-‘<div style="color:var(--muted);font-size:.88rem;margin-bottom:14px">’+S.product.subtitle+’</div>’+
-‘<div class="tags"><span class="tag tag-a">’+S.product.format+’</span><span class="tag">’+S.product.totalLength+’</span></div>’+
-‘<div style="background:var(--surface2);border-radius:9px;padding:12px;border-left:3px solid var(--accent);margin-top:14px">’+
-‘<div style="font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Transformación prometida</div>’+
-‘<div style="font-size:.88rem">’+S.product.transformationPromise+’</div></div></div>’;
-
-document.getElementById(‘chapList’).innerHTML=S.product.chapters.map(function(ch){
-return ‘<li class="chitem"><div class="chnum">’+String(ch.number).padStart(2,‘0’)+’</div>’+
-‘<div><div class="chtitle">’+ch.title+’</div>’+
-‘<div class="chdesc">’+ch.description+’</div>’+
-‘<div class="tags" style="margin-top:8px">’+ch.keyPoints.map(function(p){return ‘<span class="tag">✓ ‘+p+’</span>’;}).join(’’)+’</div></div></li>’;
-}).join(’’);
-
-document.getElementById(‘bonusSec’).innerHTML=
-‘<div class="sec-head"><h3>Bonos</h3></div><div class="sec-body">’+
-S.product.bonuses.map(function(b){
-return ‘<div class="row"><div class="rnum">+</div><div class="rtxt"><strong>’+b.title+’ <span style="color:var(--accent)">’+b.value+’</span></strong><p>’+b.description+’</p></div></div>’;
-}).join(’’)+’</div>’;
-
-document.getElementById(‘s3res’).style.display=‘block’;
+  document.getElementById('prodOverview').innerHTML='<div class="sec-head"><h3>Resumen</h3></div><div class="sec-body"><div style="font-family:\'Syne\',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:6px">'+S.product.title+'</div><div style="color:var(--muted);font-size:.88rem;margin-bottom:14px">'+S.product.subtitle+'</div><div class="tags"><span class="tag tag-a">'+S.product.format+'</span><span class="tag">'+S.product.totalLength+'</span></div><div style="background:var(--surface2);border-radius:9px;padding:12px;border-left:3px solid var(--accent);margin-top:14px"><div style="font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Transformación</div><div style="font-size:.88rem">'+S.product.transformationPromise+'</div></div></div>';
+  document.getElementById('chapList').innerHTML=S.product.chapters.map(function(ch){return '<li class="chitem"><div class="chnum">'+String(ch.number).padStart(2,'0')+'</div><div><div class="chtitle">'+ch.title+'</div><div class="chdesc">'+ch.description+'</div><div class="tags" style="margin-top:8px">'+ch.keyPoints.map(function(p){return '<span class="tag">✓ '+p+'</span>';}).join('')+'</div></div></li>';}).join('');
+  document.getElementById('bonusSec').innerHTML='<div class="sec-head"><h3>Bonos</h3></div><div class="sec-body">'+S.product.bonuses.map(function(b){return '<div class="row"><div class="rnum">+</div><div class="rtxt"><strong>'+b.title+' <span style="color:var(--accent)">'+b.value+'</span></strong><p>'+b.description+'</p></div></div>';}).join('')+'</div>';
+  document.getElementById('s3res').style.display='block';
 }
 
 // STEP 4
-function genSales(){
-document.getElementById(‘s4load’).style.display=‘flex’;
-document.getElementById(‘s4res’).style.display=‘none’;
+document.getElementById('btnS4').onclick=function(){goStep(4);genSales();};
+document.getElementById('btnRegen4').onclick=genSales;
 
-callGroq(‘Eres copywriter experto. Crea página de ventas para: Producto: ‘+S.product.title+’. Marca: ‘+S.brandName+’. Audiencia: ‘+S.idea.targetAudience+’. Precio: ‘+S.idea.priceRange+’. Transformación: ‘+S.product.transformationPromise+’. Responde SOLO JSON:\n{“headline”:“titular impactante máx 12 palabras”,“subheadline”:“subtítulo 1-2 oraciones”,“problemStatement”:“problema que resuelve 2-3 oraciones”,“solutionIntro”:“introducción solución 2-3 oraciones”,“benefits”:[{“title”:“beneficio”,“description”:“descripción”,“icon”:“emoji”}],“testimonials”:[{“quote”:“testimonio”,“author”:“Nombre”,“result”:“resultado logrado”}],“price”:“precio final”,“guarantee”:“garantía”,“callToAction”:“texto del botón”,“urgencyText”:“urgencia/escasez”}\nGenera 6 beneficios y 3 testimonios.’, function(err,txt){
-document.getElementById(‘s4load’).style.display=‘none’;
-if(err){showErr(err);return;}
-try{
-S.sales=parseJ(txt);
-renderSales();
-}catch(e){showErr(‘Error al procesar. Intenta regenerar.’);}
-});
+function genSales(){
+  document.getElementById('s4load').style.display='flex';
+  document.getElementById('s4res').style.display='none';
+  ai('Eres copywriter experto. Crea página de ventas. Producto: '+S.product.title+'. Marca: '+S.brandName+'. Audiencia: '+S.idea.targetAudience+'. Precio: '+S.idea.priceRange+'. Transformación: '+S.product.transformationPromise+'. Responde SOLO JSON:\n{"headline":"titular máx 12 palabras","subheadline":"subtítulo 1-2 oraciones","problemStatement":"problema 2-3 oraciones","solutionIntro":"solución 2-3 oraciones","benefits":[{"title":"beneficio","description":"descripción","icon":"emoji"}],"testimonials":[{"quote":"testimonio","author":"Nombre","result":"resultado"}],"price":"precio","guarantee":"garantía","callToAction":"texto botón","urgencyText":"urgencia"}\nGenera 6 beneficios y 3 testimonios.',
+  function(err,txt){
+    document.getElementById('s4load').style.display='none';
+    if(err){showErr(err);return;}
+    try{S.sales=parseJ(txt);renderSales();}
+    catch(e){showErr('Error al procesar. Intenta regenerar.');}
+  });
 }
 
 function renderSales(){
-var sp=S.sales;
-document.getElementById(‘salesPrev’).innerHTML=
-‘<div class="sp">’+
-‘<div class="sp-hero">’+
-‘<div style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;opacity:.5;margin-bottom:10px">’+S.brandName+’</div>’+
-‘<h2>’+sp.headline+’</h2><p>’+sp.subheadline+’</p></div>’+
-‘<div class="sp-sec"><h3>¿Te identificas?</h3><p style="color:#444;line-height:1.7;font-size:.92rem">’+sp.problemStatement+’</p></div>’+
-‘<div class="sp-sec" style="background:#f8f9ff"><h3>La solución</h3><p style="color:#444;line-height:1.7;font-size:.92rem">’+sp.solutionIntro+’</p></div>’+
-‘<div class="sp-sec"><h3>Lo que vas a lograr</h3><div class="bens">’+
-sp.benefits.map(function(b){return ‘<div class="ben"><div style="font-size:1.4rem;margin-bottom:7px">’+b.icon+’</div><strong>’+b.title+’</strong><p>’+b.description+’</p></div>’;}).join(’’)+
-‘</div></div>’+
-‘<div class="sp-sec" style="background:#f8f9ff"><h3>Resultados reales</h3><div class="testi-grid">’+
-sp.testimonials.map(function(t){return ‘<div class="testi"><p>”’+t.quote+’”</p><strong>’+t.author+’</strong><span>’+t.result+’</span></div>’;}).join(’’)+
-‘</div></div>’+
-‘<div class="sp-cta">’+
-‘<h2>’+S.product.title+’</h2>’+
-‘<div class="sp-price">’+sp.price+’</div>’+
-‘<div style="opacity:.7;font-size:.85rem;margin-bottom:18px">✓ ‘+sp.guarantee+’</div>’+
-‘<button class="sp-btn">’+sp.callToAction+’</button>’+
-‘<div style="opacity:.4;font-size:.78rem;margin-top:14px">’+sp.urgencyText+’</div>’+
-‘</div></div>’;
-document.getElementById(‘s4res’).style.display=‘block’;
+  var sp=S.sales;
+  document.getElementById('salesPrev').innerHTML='<div class="sp"><div class="sp-hero"><div style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;opacity:.5;margin-bottom:10px">'+S.brandName+'</div><h2>'+sp.headline+'</h2><p>'+sp.subheadline+'</p></div><div class="sp-sec"><h3>¿Te identificas?</h3><p style="color:#444;line-height:1.7;font-size:.92rem">'+sp.problemStatement+'</p></div><div class="sp-sec" style="background:#f8f9ff"><h3>La solución</h3><p style="color:#444;line-height:1.7;font-size:.92rem">'+sp.solutionIntro+'</p></div><div class="sp-sec"><h3>Lo que vas a lograr</h3><div class="bens">'+sp.benefits.map(function(b){return '<div class="ben"><div style="font-size:1.4rem;margin-bottom:7px">'+b.icon+'</div><strong>'+b.title+'</strong><p>'+b.description+'</p></div>';}).join('')+'</div></div><div class="sp-sec" style="background:#f8f9ff"><h3>Resultados reales</h3><div class="tgrid">'+sp.testimonials.map(function(t){return '<div class="testi"><p>"'+t.quote+'"</p><strong>'+t.author+'</strong><span>'+t.result+'</span></div>';}).join('')+'</div></div><div class="sp-cta"><h2>'+S.product.title+'</h2><div class="sp-price">'+sp.price+'</div><div style="opacity:.7;font-size:.85rem;margin-bottom:18px">✓ '+sp.guarantee+'</div><button class="sp-btn">'+sp.callToAction+'</button><div style="opacity:.4;font-size:.78rem;margin-top:14px">'+sp.urgencyText+'</div></div></div>';
+  document.getElementById('s4res').style.display='block';
 }
 
-function dlSales(){
-var sp=S.sales;
-var html=’<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>’+S.product.title+’</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;color:#111}.hero{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:#fff;padding:80px 40px;text-align:center}.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);margin-bottom:14px;line-height:1.2}.hero p{opacity:.8;font-size:1rem;max-width:580px;margin:0 auto}.sec{padding:50px 40px;max-width:880px;margin:0 auto}.sec h2{font-size:1.5rem;font-weight:800;margin-bottom:20px}.bens{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}.ben{background:#f8f9ff;border-radius:10px;padding:18px}.ben strong{display:block;margin-bottom:5px}.ben p{font-size:.85rem;color:#666}.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}.t{background:#f0f2ff;border-radius:10px;padding:18px}.t p{font-style:italic;color:#333;margin-bottom:10px;font-size:.88rem;line-height:1.6}.cta{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:#fff;text-align:center;padding:80px 40px}.cta h2{font-size:1.8rem;margin-bottom:14px;color:#fff}.price{font-size:3.5rem;font-weight:800;color:#4f7cff;margin:16px 0}.btn{background:#4f7cff;color:#fff;border:none;padding:16px 44px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer}</style></head><body>’+
-‘<div class="hero"><div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;opacity:.5;margin-bottom:14px">’+S.brandName+’</div><h1>’+sp.headline+’</h1><p>’+sp.subheadline+’</p></div>’+
-‘<div class="sec"><h2>¿Te identificas?</h2><p style="line-height:1.8;color:#555">’+sp.problemStatement+’</p></div>’+
-‘<div style="background:#f8f9ff"><div class="sec"><h2>La solución</h2><p style="line-height:1.8;color:#555">’+sp.solutionIntro+’</p></div></div>’+
-‘<div class="sec"><h2>Lo que vas a lograr</h2><div class="bens">’+sp.benefits.map(function(b){return ‘<div class="ben"><div style="font-size:2rem;margin-bottom:8px">’+b.icon+’</div><strong>’+b.title+’</strong><p>’+b.description+’</p></div>’;}).join(’’)+’</div></div>’+
-‘<div style="background:#f8f9ff"><div class="sec"><h2>Resultados reales</h2><div class="tgrid">’+sp.testimonials.map(function(t){return ‘<div class="t"><p>”’+t.quote+’”</p><strong>’+t.author+’</strong><div style="font-size:.78rem;color:#4f7cff;margin-top:3px">’+t.result+’</div></div>’;}).join(’’)+’</div></div></div>’+
-‘<div class="cta"><h2>’+S.product.title+’</h2><div class="price">’+sp.price+’</div><div style="opacity:.7;font-size:.88rem;margin-bottom:22px">✓ ‘+sp.guarantee+’</div><button class="btn">’+sp.callToAction+’</button><div style="opacity:.4;font-size:.78rem;margin-top:16px">’+sp.urgencyText+’</div></div>’+
-‘</body></html>’;
-var a=document.createElement(‘a’);
-a.href=‘data:text/html;charset=utf-8,’+encodeURIComponent(html);
-a.download=S.brandName.replace(/\s+/g,’-’).toLowerCase()+’-ventas.html’;
-a.click();
-}
+document.getElementById('btnDl').onclick=function(){
+  var sp=S.sales;
+  var html='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+S.product.title+'</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;color:#111}.hero{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:#fff;padding:80px 40px;text-align:center}.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);margin-bottom:14px;line-height:1.2}.hero p{opacity:.8;font-size:1rem;max-width:580px;margin:0 auto}.sec{padding:50px 40px;max-width:880px;margin:0 auto}.sec h2{font-size:1.5rem;font-weight:800;margin-bottom:20px}.bens{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}.ben{background:#f8f9ff;border-radius:10px;padding:18px}.ben strong{display:block;margin-bottom:5px}.ben p{font-size:.85rem;color:#666}.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}.t{background:#f0f2ff;border-radius:10px;padding:18px}.t p{font-style:italic;color:#333;margin-bottom:10px;font-size:.88rem;line-height:1.6}.cta{background:linear-gradient(135deg,#1a0a2e,#0a1628);color:#fff;text-align:center;padding:80px 40px}.cta h2{font-size:1.8rem;margin-bottom:14px;color:#fff}.price{font-size:3.5rem;font-weight:800;color:#4f7cff;margin:16px 0}.btn{background:#4f7cff;color:#fff;border:none;padding:16px 44px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer}</style></head><body><div class="hero"><div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;opacity:.5;margin-bottom:14px">'+S.brandName+'</div><h1>'+sp.headline+'</h1><p>'+sp.subheadline+'</p></div><div class="sec"><h2>¿Te identificas?</h2><p style="line-height:1.8;color:#555">'+sp.problemStatement+'</p></div><div style="background:#f8f9ff"><div class="sec"><h2>La solución</h2><p style="line-height:1.8;color:#555">'+sp.solutionIntro+'</p></div></div><div class="sec"><h2>Lo que vas a lograr</h2><div class="bens">'+sp.benefits.map(function(b){return '<div class="ben"><div style="font-size:2rem;margin-bottom:8px">'+b.icon+'</div><strong>'+b.title+'</strong><p>'+b.description+'</p></div>';}).join('')+'</div></div><div style="background:#f8f9ff"><div class="sec"><h2>Resultados reales</h2><div class="tgrid">'+sp.testimonials.map(function(t){return '<div class="t"><p>"'+t.quote+'"</p><strong>'+t.author+'</strong><div style="font-size:.78rem;color:#4f7cff;margin-top:3px">'+t.result+'</div></div>';}).join('')+'</div></div></div><div class="cta"><h2>'+S.product.title+'</h2><div class="price">'+sp.price+'</div><div style="opacity:.7;font-size:.88rem;margin-bottom:22px">✓ '+sp.guarantee+'</div><button class="btn">'+sp.callToAction+'</button><div style="opacity:.4;font-size:.78rem;margin-top:16px">'+sp.urgencyText+'</div></div></body></html>';
+  var a=document.createElement('a');a.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);a.download=S.brandName.replace(/\s+/g,'-').toLowerCase()+'-ventas.html';a.click();
+};
 
-function restart(){
-S={key:S.key,step:1,niche:’’,ideas:[],idea:null,brand:null,brandName:’’,product:null,sales:null};
-document.getElementById(‘nicheIn’).value=’’;
-document.getElementById(‘s1form’).style.display=‘block’;
-document.getElementById(‘s1res’).style.display=‘none’;
-document.getElementById(‘btnS2’).disabled=true;
-goStep(1);
-}
+document.getElementById('btnRestart').onclick=function(){
+  S={step:1,niche:'',ideas:[],idea:null,brand:null,brandName:'',product:null,sales:null};
+  document.getElementById('nicheIn').value='';
+  document.getElementById('s1form').style.display='block';
+  document.getElementById('s1res').style.display='none';
+  document.getElementById('btnS2').disabled=true;
+  goStep(1);
+};
 </script>
-
 </body>
 </html>
