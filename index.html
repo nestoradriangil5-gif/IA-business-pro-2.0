@@ -198,14 +198,6 @@ input[type=text]::placeholder,textarea::placeholder{color:var(–text3)}
     <div class="prog-step" id="ps4"><div class="prog-n">4</div><span class="prog-label">Ventas</span></div>
   </div>
 
-  <!-- API KEY BAR -->
-
-  <div id="key-bar" style="background:#0d1117;border:1.5px solid #1e2d45;border-radius:14px;padding:16px 20px;margin-bottom:28px">
-    <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#00e5a0;margin-bottom:10px">🔑 Google AI Key — pégala aquí (gratis en aistudio.google.com)</div>
-    <input type="text" id="api-key-input" placeholder="AIza..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="width:100%;background:#07090f;border:1.5px solid #1e2d45;border-radius:10px;padding:12px 14px;color:#eef2ff;font-family:monospace;font-size:.88rem;outline:none"/>
-    <div id="key-status" style="font-size:.78rem;color:#5a6a8a;margin-top:8px">Ingresa tu clave para comenzar</div>
-  </div>
-
   <!-- STEP 1 -->
 
   <div class="panel active" id="panel1">
@@ -319,8 +311,7 @@ function goStep(n){
 }
 
 function callAI(prompt,cb){
-  var key=document.getElementById('api-key-input').value.trim();
-  if(!key){cb('Pega tu Google AI key primero (AIza...)');return;}
+  var key='AIzaSyDueTmuzXmTlkHodwUlo3EvbaBwWbeyEgw';
   var xhr=new XMLHttpRequest();
   xhr.open('POST','https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+key,true);
   xhr.setRequestHeader('Content-Type','application/json');
@@ -340,17 +331,6 @@ function callAI(prompt,cb){
 }
 
 window.addEventListener('DOMContentLoaded',function(){
-
-// KEY DETECTION
-var keyInput=document.getElementById('api-key-input');
-var keyStatus=document.getElementById('key-status');
-function checkKey(){
-  var v=keyInput.value.trim();
-  if(v.length>20){keyStatus.textContent='✓ Clave lista — ya puedes generar';keyStatus.style.color='#00e5a0';}
-  else{keyStatus.textContent='Ingresa tu clave para comenzar';keyStatus.style.color='#5a6a8a';}
-}
-keyInput.addEventListener('input',checkKey);
-keyInput.addEventListener('paste',function(){setTimeout(checkKey,50);});
 
 // STEP 1
 E('btn-ideas').addEventListener('click',genIdeas);
