@@ -341,6 +341,7 @@ function genIdeas(){
 var niche=document.getElementById(‘nicheIn’).value.trim();
 if(!niche){alert(‘Escribe tu nicho primero’);return;}
 if(!S.key){alert(‘Primero activa tu Groq API Key arriba ↑’);return;}
+alert(‘✓ Clave: ‘+S.key.substring(0,10)+’… Nicho: ‘+niche+’ — Llamando a Groq…’);
 S.niche=niche; S.idea=null;
 document.getElementById(‘s1form’).style.display=‘none’;
 document.getElementById(‘s1load’).style.display=‘flex’;
